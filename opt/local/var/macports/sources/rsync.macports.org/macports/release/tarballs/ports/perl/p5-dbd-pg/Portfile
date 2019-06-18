@@ -1,0 +1,107 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.26 5.28
+perl5.setup         DBD-Pg 3.7.4
+revision            1
+license             {Artistic-1 GPL}
+categories          perl databases
+maintainers         nomaintainer
+description         Perl DBI module to provide access to PostgreSQL databases
+long_description    DBD::Pg is a Perl module which works with the DBI \
+                    module to provide access to PostgreSQL databases
+
+platforms           darwin
+
+checksums           rmd160  ca702e850204138e2894b1f482174c078850d5de \
+                    sha256  9ffa9c4e9d1d6b1483ec3259114b95998fd7e4a4168931c903b5ad5fd7a6783e \
+                    size    261212
+
+if {${perl5.major} ne ""} {
+    depends_build-append \
+                    port:p${perl5.major}-test-warn
+
+    depends_lib-append \
+                    port:p${perl5.major}-dbi \
+                    port:p${perl5.major}-version
+
+variant postgresql92 conflicts postgresql93 postgresql94 postgresql95 postgresql96 description {build with postgresql92 port} {
+    depends_lib-append      port:postgresql92
+    if {[vercmp [macports_version] 2.5.99] >= 0} {
+    configure.env           PATH=${prefix}/lib/postgresql92/bin:$env(PATH) \
+                            POSTGRES_INCLUDE=${prefix}/include/postgresql92 \
+                            "POSTGRES_LIB=${prefix}/lib/postgresql92 -lssl"
+    } else {
+    configure.env           PATH=${prefix}/lib/postgresql92/bin:$env(PATH) \
+                            POSTGRES_INCLUDE="${prefix}/include/postgresql92" \
+                            POSTGRES_LIB="${prefix}/lib/postgresql92 -lssl"
+    }
+}
+
+variant postgresql93 conflicts postgresql92 postgresql94 postgresql95 postgresql96 description {build with postgresql93 port} {
+    depends_lib-append      port:postgresql93
+
+    if {[vercmp [macports_version] 2.5.99] >= 0} {
+    configure.env           PATH=${prefix}/lib/postgresql93/bin:$env(PATH) \
+                            POSTGRES_INCLUDE=${prefix}/include/postgresql93 \
+                            "POSTGRES_LIB=${prefix}/lib/postgresql93 -lssl"
+    } else {
+    configure.env           PATH=${prefix}/lib/postgresql93/bin:$env(PATH) \
+                            POSTGRES_INCLUDE="${prefix}/include/postgresql93" \
+                            POSTGRES_LIB="${prefix}/lib/postgresql93 -lssl"
+    }
+}
+
+variant postgresql94 conflicts postgresql92 postgresql93 postgresql95 postgresql96 description {build with postgresql94 port} {
+    depends_lib-append      port:postgresql94
+
+    if {[vercmp [macports_version] 2.5.99] >= 0} {
+    configure.env           PATH=${prefix}/lib/postgresql94/bin:$env(PATH) \
+                            POSTGRES_INCLUDE=${prefix}/include/postgresql94 \
+                            "POSTGRES_LIB=${prefix}/lib/postgresql94 -lssl"
+    } else {
+    configure.env           PATH=${prefix}/lib/postgresql94/bin:$env(PATH) \
+                            POSTGRES_INCLUDE="${prefix}/include/postgresql94" \
+                            POSTGRES_LIB="${prefix}/lib/postgresql94 -lssl"
+    }
+}
+
+variant postgresql95 conflicts postgresql92 postgresql93 postgresql94 postgresql96 description {build with postgresql95 port} {
+    depends_lib-append      port:postgresql95
+
+    if {[vercmp [macports_version] 2.5.99] >= 0} {
+    configure.env           PATH=${prefix}/lib/postgresql95/bin:$env(PATH) \
+                            POSTGRES_INCLUDE=${prefix}/include/postgresql95 \
+                            "POSTGRES_LIB=${prefix}/lib/postgresql95 -lssl"
+    } else {
+    configure.env           PATH=${prefix}/lib/postgresql95/bin:$env(PATH) \
+                            POSTGRES_INCLUDE="${prefix}/include/postgresql95" \
+                            POSTGRES_LIB="${prefix}/lib/postgresql95 -lssl"
+    }
+}
+
+variant postgresql96 conflicts postgresql92 postgresql93 postgresql94 postgresql95 description {build with postgresql96 port} {
+    depends_lib-append      port:postgresql96
+
+    if {[vercmp [macports_version] 2.5.99] >= 0} {
+    configure.env           PATH=${prefix}/lib/postgresql96/bin:$env(PATH) \
+                            POSTGRES_INCLUDE=${prefix}/include/postgresql96 \
+                            "POSTGRES_LIB=${prefix}/lib/postgresql96 -lssl"
+    } else {
+    configure.env           PATH=${prefix}/lib/postgresql96/bin:$env(PATH) \
+                            POSTGRES_INCLUDE="${prefix}/include/postgresql96" \
+                            POSTGRES_LIB="${prefix}/lib/postgresql96 -lssl"
+    }
+}
+
+# Default to latest release
+if {![variant_isset postgresql92] && \
+    ![variant_isset postgresql93] && \
+    ![variant_isset postgresql94] && \
+    ![variant_isset postgresql95] && \
+    ![variant_isset postgresql96]} {
+        default_variants    +postgresql96
+}
+}

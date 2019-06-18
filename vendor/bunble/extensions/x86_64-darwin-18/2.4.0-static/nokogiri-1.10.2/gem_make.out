@@ -1,0 +1,3 @@
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/nokogiri-1.10.2/ext/nokogiri
+/Users/nishiokaharuki/.rbenv/versions/2.4.1/bin/ruby -r ./siteconf20190617-18106-d6p7v3.rb extconf.rb
+undefined method `success?' for nil:NilClass

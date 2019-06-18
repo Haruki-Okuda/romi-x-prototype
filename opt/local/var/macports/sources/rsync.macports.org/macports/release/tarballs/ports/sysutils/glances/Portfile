@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8::et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           python 1.0
+
+github.setup        nicolargo glances 2.11.1 v
+categories          sysutils
+license             GPL-3
+maintainers         {g5pw @g5pw} openmaintainer
+supported_archs     noarch
+
+description         Glances is a CLI curses based monitoring tool for GNU/Linux and BSD OS.
+long_description    ${description}
+
+platforms           darwin
+
+checksums			rmd160  6af38c82b654b0c0bdddb93ddf3216eec7bf69f1 \
+					sha256  97664f28789a4e88bee581ef5627decaa161113bf0aa8394efcf55a4962b7989
+
+python.default_version 36
+depends_lib         port:py${python.version}-psutil \
+                    port:py${python.version}-setuptools
+
+patch {
+    reinplace "s|/usr/local|${prefix}|" setup.py
+}
+
+variant html_export description {Adds HTML export option} {
+    depends_lib-append port:py${python.version}-jinja2
+}

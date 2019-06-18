@@ -1,0 +1,21 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.26 5.28
+perl5.setup         Compress-Raw-Bzip2 2.086
+license             {Artistic-1 GPL}
+maintainers         nomaintainer
+description         Perl low-level interface to bzip2 compression library
+long_description    Compress::Raw::Bzip2 provides an interface to the \
+                    in-memory compression/uncompression functions from \
+                    the bzip2 compression library for the modules \
+                    IO::Compress::Bzip2 and IO::Compress::Bunzip2.
+platforms           darwin
+
+checksums           rmd160  39f20fd148fa6678034dec531f75cdad5511477d \
+                    sha256  46d3954a676d21cb10557dd3cc8140703b87bd8f14e49160120165586aa9f399 \
+                    size    138150
+
+# builds using embedded bzip2 source, no external dependency required

@@ -1,0 +1,40 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+
+name                acpica
+version             20190108
+categories          devel
+# Comes with a restrictive Intel license in the source files, but the included 
+# acpisrc tool replaces them with an open source dual license.
+# Why not just indicate triple licensing to start with? Who knows.
+license             {Permissive GPL-2}
+platforms           darwin
+maintainers         nomaintainer
+
+description         ACPI compiler
+long_description    A compiler for ACPI DSDT .asl files.
+
+homepage            https://acpica.org/
+master_sites        ${homepage}sites/acpica/files/
+
+distname            acpica-unix2-${version}
+
+checksums           rmd160  ea54e94a64ec7f60f4d07694c3f8fd54e040fe66 \
+                    sha256  727b0691660f823046b3e7df0e9a27f908d9fdc1f8dc4ec88d99773c28fd61ac \
+                    size    1544511
+
+depends_build       port:bison
+
+use_configure       no
+
+destroot {
+    xinstall -W ${worksrcpath} \
+        generate/unix/iasl/obj/iasl \
+        generate/unix/acpixtract/obj/acpixtract \
+        generate/unix/acpiexec/obj/acpiexec \
+        ${destroot}${prefix}/bin
+}
+
+livecheck.regex     ${name}-unix2-(\[0-9.\]+)${extract.suffix}
+livecheck.url       ${homepage}downloads/

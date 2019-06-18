@@ -1,0 +1,29 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           meson 1.0
+
+github.setup        att ast b9e14229949de2bc39723d24323d64621d92037d
+version             20190328
+revision            0
+checksums           rmd160  c885860df5137a464fd3ca9fc5f7bb13cdc7ecff \
+                    sha256  204ec61c32f4a6e6ca4d2f0c08a96946124b8821cf8f09cfed69c62aeaf73802 \
+                    size    2038481
+
+name                ksh93
+conflicts           pdksh
+categories          shells
+platforms           darwin freebsd
+maintainers         {ryandesign @ryandesign} openmaintainer
+license             CPL-1
+
+description         The AT&T Korn shell
+
+long_description    The official version of ksh-93, by David Korn and AT&T research
+
+depends_lib         port:libiconv
+
+post-patch {
+    reinplace "s|@CC@|${configure.cc}|g" ${worksrcpath}/scripts/libast_prereq.sh
+}

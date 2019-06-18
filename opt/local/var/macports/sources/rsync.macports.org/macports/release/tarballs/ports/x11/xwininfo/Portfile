@@ -1,0 +1,29 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+
+name                xwininfo
+version             1.1.4
+categories          x11
+license             X11
+maintainers         {jeremyhu @jeremyhu} openmaintainer
+description         Window information utility for X11
+long_description    ${description}
+
+platforms           darwin
+
+homepage            https://www.x.org/
+master_sites        xorg:individual/app/
+use_bzip2           yes
+
+checksums           rmd160  8685af4c399fbb6a1fc4262e84d9713ba600dfa7 \
+                    sha256  839498aa46b496492a5c65cd42cd2e86e0da88149b0672e90cb91648f8cd5b01 \
+                    size    169159
+
+depends_build       port:pkgconfig
+
+depends_lib         port:xorg-libX11
+
+livecheck.type      regex
+livecheck.regex     ${name}-(\[\\d.\]+)${extract.suffix}
+livecheck.url       http://xorg.freedesktop.org/archive/individual/app/?C=M&O=D

@@ -1,0 +1,36 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-oauth2client
+set realname        oauth2client
+version             4.0.0
+
+python.versions     27 34 35 36
+
+categories-append   www
+maintainers         nomaintainer
+license             Apache-2
+description         client library for OAuth 2.0
+long_description    ${description}
+
+platforms           darwin
+supported_archs     noarch
+
+homepage            https://pypi.python.org/pypi/${realname}
+master_sites        pypi:o/${realname}
+distname            ${realname}-${version}
+
+checksums           rmd160 97a433b6dfb7dcf6a2a9bbd2bb1aa5d00711961d \
+                    sha256 80be5420889694634b8517b4acd3292ace881d9d1aa9d590d37ec52faec238c7
+
+if {${name} ne ${subport}} {
+    depends_build-append port:py${python.version}-setuptools
+    depends_lib-append   port:py${python.version}-httplib2 \
+                         port:py${python.version}-uritemplate
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+    livecheck.name      ${realname}
+}

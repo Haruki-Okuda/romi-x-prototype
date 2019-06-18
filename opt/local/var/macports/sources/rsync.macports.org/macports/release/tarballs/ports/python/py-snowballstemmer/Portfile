@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-snowballstemmer
+version             1.2.1
+platforms           darwin
+supported_archs     noarch
+license             BSD
+maintainers         nomaintainer
+
+description         This package provides 16 stemmer algorithms 15 Poerter English stemmer \
+                    generated from Snowball algorithms.
+long_description    ${description}
+
+homepage            https://github.com/shibukawa/snowball_py
+master_sites        pypi:s/snowballstemmer
+distname            snowballstemmer-${version}
+
+checksums           rmd160  433de19c91b3f0914bb280f37cebc21324da4db5 \
+                    sha256  919f26a68b2c17a7634da993d91339e288964f93c274f1343e3bbbe2096e1128 \
+                    size    49626
+
+python.versions     27 34 35 36 37
+
+if {$subport ne $name} {
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}

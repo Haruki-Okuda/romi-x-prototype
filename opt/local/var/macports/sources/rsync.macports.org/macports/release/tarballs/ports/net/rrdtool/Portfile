@@ -1,0 +1,66 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+name                rrdtool
+version             1.7.0
+revision            3
+categories          net
+license             GPL-2+
+platforms           darwin
+maintainers         {parvis.nl:github @pdvnl} openmaintainer
+
+description         Round Robin Database
+long_description    RRDtool is a system to store and display time-series data
+
+homepage            http://oss.oetiker.ch/rrdtool/
+master_sites        ${homepage}pub/
+
+checksums           rmd160  8816c971189a60e190d15a5b3827697c299ffce3 \
+                    sha256  f97d348935b91780f2cd80399719e20c0b91f0a23537c0a85f9ff306d4c5526b \
+                    size    2849994
+
+perl5.branches      5.28
+
+depends_build       port:pkgconfig
+
+depends_lib         path:lib/pkgconfig/cairo.pc:cairo \
+                    port:gettext \
+                    path:lib/pkgconfig/glib-2.0.pc:glib2 \
+                    port:fribidi \
+                    port:libpng \
+                    port:libxml2 \
+                    path:lib/pkgconfig/pango.pc:pango \
+                    port:tcp_wrappers
+
+depends_run         port:dejavu-fonts \
+                    port:perl${perl5.major}
+
+patchfiles-append   configure-dont-run-libtool.patch
+patchfiles-append   configure-remove-cute-output.patch
+
+configure.perl      ${perl5.bin}
+configure.args      --disable-libdbi \
+                    --disable-librados \
+                    --enable-perl-site-install \
+                    --with-perl-options="INSTALLDIRS=vendor" \
+                    --disable-silent-rules \
+                    --disable-lua \
+                    --disable-python \
+                    --disable-ruby \
+                    --disable-tcl \
+                    --without-systemdsystemunitdir
+
+post-destroot {
+    fs-traverse f ${destroot}${prefix} {
+        if {[file isfile ${f}]} {
+            switch [file tail ${f}] {
+                .packlist -
+                perllocal.pod {
+                    delete ${f}
+                }
+            }
+        }
+    }
+}

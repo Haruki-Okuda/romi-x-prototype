@@ -1,0 +1,28 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           bitbucket 1.0
+
+bitbucket.setup     ruamel yaml 0.15.94
+checksums           rmd160 2e0ff14d3afaf0e47479c6685eace0125cd762eb \
+                    sha256 c670cbdf09dee89fc714cb95b04be24917d25a1a4d51b0100555aebaf7663532 \
+                    size   398392
+revision            0
+
+name                py-ruamel-yaml
+license             MIT
+platforms           darwin
+maintainers         {michaelld @michaelld} openmaintainer
+
+description         YAML 1.2 loader/dumper package for Python
+long_description    ${description}. \
+                    It is a derivative of Kirill Simonov’s PyYAML 3.11.
+
+homepage            http://yaml.readthedocs.io/
+
+python.versions     27 36 37
+
+if {${name} ne ${subport}} {
+    depends_build-append    port:py${python.version}-setuptools
+}

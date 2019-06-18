@@ -1,0 +1,64 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           cxx11 1.1
+
+name                znc
+version             1.7.3
+categories          irc
+platforms           darwin
+maintainers         nomaintainer
+license             Apache-2
+description         An advanced IRC bouncer
+long_description    ZNC is an IRC bounce/proxy with many advanced features \
+                    like detaching, multiple users, multiple clients per \
+                    user, channel/query playback buffers, SSL, IPv6, \
+                    transparent DCC bouncing, C++/Perl/Tcl module support, \
+                    party line, and Web administration.
+
+homepage            https://znc.in/
+master_sites        ${homepage}releases/archive/
+
+checksums           rmd160  a52f7f8500dc3156dd3387f9450e8558132013d6 \
+                    sha256  1e4cc31837a1e8e6cc310873659a167cec16a3fd4281cbc3bf364e42352c113d \
+                    size    2084575
+
+universal_variant   no
+
+depends_lib         path:lib/libssl.dylib:openssl port:tcl port:perl5 port:icu
+
+configure.args      --disable-python \
+                    --enable-perl \
+                    --enable-tcl \
+                    --with-tcl=${prefix}/lib \
+                    ac_cv_path_BREW=
+
+if {[string match *clang* ${configure.cxx}]} {
+    configure.ldflags-append -stdlib=${configure.cxx_stdlib}
+}
+
+# Disable silent rules
+build.args-append   V=1
+
+variant python35 description "Enable Python modules, using python35" conflicts python36 {
+    compiler.blacklist-append { clang <= 503.0.38  }
+    configure.args-replace --disable-python --enable-python
+    depends_build-append port:pkgconfig
+    depends_lib-append port:python35
+    configure.pkg_config_path ${frameworks_dir}/Python.framework/Versions/3.5/lib/pkgconfig/
+}
+
+variant python36 description "Enable Python modules, using python36" conflicts python35 {
+    compiler.blacklist-append { clang <= 503.0.38  }
+    configure.args-replace --disable-python --enable-python
+    depends_build-append port:pkgconfig
+    depends_lib-append port:python36
+    configure.pkg_config_path ${frameworks_dir}/Python.framework/Versions/3.6/lib/pkgconfig/
+}
+
+# Will fail in trace mode due to this downloads gtest
+test.run            yes
+
+livecheck.type      regex
+livecheck.url       ${homepage}releases/
+livecheck.regex     ${name}-(\[0-9.\]+)${extract.suffix}

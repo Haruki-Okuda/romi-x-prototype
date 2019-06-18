@@ -1,0 +1,39 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           texlive 1.0
+
+name                texlive-humanities
+version             47359
+revision            0
+
+categories          tex
+maintainers         {dports @drkp}
+license             Copyleft Permissive
+description         TeX Live: Humanities packages
+long_description    Packages for law, linguistics, social sciences, humanities, etc.
+
+checksums           texlive-humanities-47359-run.tar.xz \
+                    rmd160  859411323f53aee4bda51a6eb9c30d316fb1c730 \
+                    sha256  5ed3ad68e566ee9712bba3490cb50ef0c4197f81b4fd18d43e05fb8df3dd26eb \
+                    texlive-humanities-47359-doc.tar.xz \
+                    rmd160  5b3d244fb3666228859bae65664e294d726f65fa \
+                    sha256  c50922d7eeaafcc687d0d5b171a2785abe1f93ef24977609a28d0988d9cbcf96 \
+                    texlive-humanities-47359-src.tar.xz \
+                    rmd160  17252de01c20979baa6023b8af734a1a485d77f3 \
+                    sha256  d992e2e59d2955bae8d197191d56adf6508062b6fcf55f3578574ae77d9236cd
+
+depends_lib         port:texlive-latex
+
+texlive.binaries    diadia
+
+pre-activate {
+    # Handle conflicts for TL2018 upgrade
+    if { ![catch {set vers [lindex [registry_active texlive-latex-extra] 0]}]
+         && ([vercmp [lindex $vers 1] 47410] < 0) } {
+        registry_deactivate_composite texlive-latex-extra "" [list ports_nodepcheck 1]
+    }
+}
+
+
+texlive.texmfport

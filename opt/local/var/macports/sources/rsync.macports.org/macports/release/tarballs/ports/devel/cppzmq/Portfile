@@ -1,0 +1,65 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+name                cppzmq
+maintainers         {michaelld @michaelld} openmaintainer
+platforms           darwin
+categories          devel sysutils net
+license             Permissive
+
+description         High-level C++ Binding for 0MQ
+long_description    ${description}
+
+subport cppzmq-devel {}
+
+if {${subport} eq ${name}} {
+
+    # release
+
+    github.setup    zeromq cppzmq 4.3.0 v
+    checksums       rmd160 2841b8395b290cd895885881864b34e399be7d10 \
+                    sha256 5634462ee21a9dad3baf0db68812a8ac1262353d2039e2af402ff2d356b26ca2 \
+                    size   22897
+    revision        0
+
+    # bump the epoch because I moved the version from 20170720 to 4.2.2
+
+    epoch           1
+
+    conflicts       ${name}-devel
+    long_description ${description}: \
+        This port follows the release version of ${name}, which is typically updated every 6 months. If for some reason this port does not build or function as desired, try the ${name}-devel port.
+
+} else {
+
+    # devel
+
+    github.setup    zeromq cppzmq 9eef00e4794cc9a30d81e5965a15a03bedcfaa6e
+    version         20190424-[string range ${github.version} 0 7]
+    checksums       rmd160 2e00004c3f3ddb755509e8eb1a2dcdd7e9d59916 \
+                    sha256 bc971af96df1b20bb5b31a3c412b99a6991388f5de81a0de5373be1ab737c80a \
+                    size   24518
+    revision        0
+
+    conflicts       ${name}
+    long_description ${description}: \
+        This port follows the GIT master version of ${name}, which is typically updated every few days to weeks.
+
+}
+
+depends_lib-append  path:lib/libzmq.dylib:zmq
+
+# this is just a header; skip all steps and manually do destroot
+
+supported_archs     noarch
+
+use_configure no
+
+build {}
+
+destroot {
+    xinstall -m 755 -d ${destroot}${prefix}/include
+    copy ${worksrcpath}/zmq.hpp ${destroot}${prefix}/include
+}

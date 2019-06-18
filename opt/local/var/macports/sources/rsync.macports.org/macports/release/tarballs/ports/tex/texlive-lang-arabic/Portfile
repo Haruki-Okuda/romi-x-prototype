@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           texlive 1.0
+
+name                texlive-lang-arabic
+version             47226
+revision            0
+
+categories          tex
+maintainers         {dports @drkp}
+license             Copyleft Permissive
+description         TeX Live: Arabic
+long_description    Support for Arabic and Persian.
+
+checksums           texlive-lang-arabic-47226-run.tar.xz \
+                    rmd160  40a963cd0c8b0fd66731234e3ad8db486d957f03 \
+                    sha256  2ed47dbbabedfa7bf445a5faa2beb770f100c3faf7149f2d4e94df9cf19755dc \
+                    texlive-lang-arabic-47226-doc.tar.xz \
+                    rmd160  3caa5c2965cf9164d48be6555608cc51e951cc43 \
+                    sha256  5dbf2b6d4afc4a4814c1ca0b92034be91f60e26f1cb73f74c6d75aa4b399250b \
+                    texlive-lang-arabic-47226-src.tar.xz \
+                    rmd160  db51f118c5f409a1b43f386170c8d89f3498633a \
+                    sha256  d1ed66f529554d7dbed4ded1c55becdb140f0c2c1afd6fc63d13ebbca66eb937
+
+depends_lib         port:texlive-basic
+
+texlive.languages      \
+    {arabic zerohyph.tex 2 3 {} {} {} {} } \
+    {farsi zerohyph.tex 2 3 {persian} {} {} {} }
+
+texlive.maps      \
+    {Map arabi.map} \
+    {MixedMap arabtex.map} \
+    {Map dad.map}
+
+
+texlive.texmfport

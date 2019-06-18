@@ -1,0 +1,90 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           compiler_blacklist_versions 1.0
+
+name                ocaml
+epoch               1
+version             4.07.1
+# When updating ocaml, also update ocaml-camlp4 and camlp5 to compatible versions
+# (c.f. #26769, #20219, #18292) or increase their revisions to rebuild them.
+#
+# When ocaml is next updated, please update lablgtk2 as well
+set major_vers      [join [lrange [split ${version} .] 0 1] .]
+platforms           darwin
+supported_archs     i386 x86_64
+maintainers         {pmetzger @pmetzger} openmaintainer
+categories          lang ocaml
+description         Compiler and libraries for the OCaml programming language
+license             LGPL
+homepage            http://www.ocaml.org/
+master_sites        http://caml.inria.fr/pub/distrib/ocaml-${major_vers}/
+
+checksums           rmd160  372b342c469dc9031de141f22f4dd65bbde2efbc \
+                    sha256  dfe48b1da31da9c82d77612582fae74c80e8d1ac650e1c24f5ac9059e48307b8 \
+                    size    2935928
+
+long_description    OCaml is an industrial strength \
+                    programming language in the ML family, supporting \
+                    functional, imperative and object-oriented styles.
+
+use_xz              yes
+
+depends_lib         port:ncurses
+
+universal_variant   no
+
+set docdir          ${prefix}/share/doc/${name}
+
+compiler.blacklist  gcc-4.0 *gcc-4.2 {clang < 400}
+
+platform darwin {
+    if {${os.major} < 11} {
+        # need to add strnlen patch as not in library
+        patchfiles-append  patch-strnlen-socketaddr.diff
+
+        # compiler selection pulls in clang-3.4 on 10.6 and less
+        # and this compiler is needed for this port to run once installed
+        # so force this compiler and require it at runtime
+        compiler.whitelist     macports-clang-3.4
+        depends_run-append     port:clang-3.4
+    }
+
+    if {${build_arch} eq "i386"} {
+        patchfiles-append  patch-configure-darwin32.diff
+    }
+}
+
+# Configure.
+configure.pre_args  -prefix ${prefix}
+configure.args      -cc ${configure.cc} -as \"${configure.cc} -c\" -aspp \"${configure.cc} -c\" \ -no-graph
+
+# Building.
+build.target        world.opt
+
+# Install.
+destroot.target     install
+destroot.destdir    BINDIR=${destroot}${prefix}/bin \
+                    LIBDIR=${destroot}${prefix}/lib/ocaml \
+                    MANDIR=${destroot}${prefix}/share/man
+
+post-destroot {
+    # Change "ld.conf" to remove ${destroot} in paths.
+    reinplace "s:${destroot}::g" ${destroot}${prefix}/lib/ocaml/ld.conf
+    xinstall -d ${destroot}${docdir}
+    xinstall -m 0644 -W ${worksrcpath} Changes LICENSE README.adoc ${destroot}${docdir}
+    system -W ${worksrcpath}/emacs "make EMACSDIR=${destroot}${prefix}/share/emacs/site-lisp NOCOMPILE=true simple-install"
+}
+
+# Variants.
+variant profile description {Enable profiling} {
+    if {[vercmp [macports_version] 2.5.99] >= 0} {
+    configure.env-append "CC=gcc -pg"
+    } else {
+    configure.env-append CC="gcc -pg"
+    }
+}
+
+livecheck.type      regex
+livecheck.url       http://caml.inria.fr/download.en.html
+livecheck.regex     "ocaml-\[0-9\.]+/ocaml-(\[0-9\.\]+).tar"

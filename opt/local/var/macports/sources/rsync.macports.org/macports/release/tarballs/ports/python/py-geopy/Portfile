@@ -1,0 +1,37 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           github 1.0
+
+github.setup        geopy geopy 1.18.1
+name                py-geopy
+
+categories-append   devel
+license             MIT
+platforms           darwin
+supported_archs     noarch
+maintainers         openmaintainer {mmoll @mamoll}
+description         Geocoding library for Python.
+
+long_description \
+    geopy makes it easy for developers to locate the coordinates of addresses, \
+    cities, countries, and landmarks across the globe using third-party \
+    geocoders and other sources of data. \
+    geopy includes geocoder classes the OpenStreetMap Nominatim, ESRI ArcGIS, \
+    Google Geocoding API (V3), Baidu Maps, Bing Maps API, Yandex, IGN France, \
+    GeoNames, Mapzen Search, OpenMapQuest, PickPoint, What3Words, OpenCage, \
+    SmartyStreets, and GeocodeFarm geocoder services. The various geocoder \
+    classes are located in geopy.geocoders.
+
+checksums           rmd160  c0b747b91b759ce0306562d7e48564ed66aec261 \
+                    sha256  cc94236d3a77dccd196f2ca23dcac2a799a0b30ee797776063f491c646e7b242 \
+                    size    249675
+
+python.versions     27 34 35 36 37
+
+if {${name} ne ${subport}} {
+    depends_lib-append      port:py${python.version}-geographiclib \
+                            port:py${python.version}-setuptools
+    livecheck.type  none
+}

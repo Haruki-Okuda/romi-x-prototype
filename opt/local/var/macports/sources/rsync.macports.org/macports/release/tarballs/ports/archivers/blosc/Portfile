@@ -1,0 +1,40 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim: fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           cmake 1.1
+PortGroup           github 1.0
+
+github.setup        Blosc c-blosc 1.16.3 v
+revision            0
+name                blosc
+categories          archivers devel
+platforms           darwin
+license             MIT
+
+maintainers         {stromnov @stromnov} openmaintainer
+
+description         A blocking, shuffling and loss-less compression library.
+
+long_description    Blosc is a high performance compressor optimized \
+                    for binary data. It has been designed to transmit data \
+                    to the processor cache faster than the traditional, \
+                    non-compressed, direct memory fetch approach via \
+                    a memcpy() OS call. It uses the blocking technique \
+                    to reduce activity on the memory bus as much as possible.
+
+homepage            http://www.blosc.org/
+
+checksums           rmd160  84411bc07625d425ef5f2f88d21eb0855f1a9af1 \
+                    sha256  e9f1dc57b11d540c337bc97c5271c29d70482e14ee28262260201e9d7ba230eb \
+                    size    844534
+
+depends_lib-append  port:lz4 \
+                    port:zlib \
+                    port:zstd
+
+configure.args-append \
+                    -DPREFER_EXTERNAL_LZ4=ON \
+                    -DPREFER_EXTERNAL_ZLIB=ON \
+                    -DPREFER_EXTERNAL_ZSTD=ON \
+                    -DBUILD_TESTS=OFF \
+                    -DBUILD_BENCHMARKS=OFF

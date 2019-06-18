@@ -1,0 +1,68 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           wxWidgets 1.0
+PortGroup           compiler_blacklist_versions 1.0
+PortGroup           cxx11 1.1
+
+name                FileZilla
+version             3.41.2
+categories          www aqua
+platforms           darwin
+maintainers         {yan12125 @yan12125} openmaintainer
+license             GPL-2+
+
+description         Open-source FTP, FTPS, and SFTP client
+
+long_description    FileZilla Client is a fast and reliable cross-platform \
+                    FTP, FTPS and SFTP client with lots of useful features \
+                    and an intuitive graphical user interface.
+
+homepage            https://filezilla-project.org/
+master_sites        https://download.filezilla-project.org/client
+
+checksums           rmd160  5800b899e883a5a0cd4a959cd7cc20170d1e3f47 \
+                    sha256  c23be24831f115748b4fd2c126840f0318e5b4da5cd3da1b03daaef9f7dff017 \
+                    size    4994803
+
+# wxWidgets-3.0 with support for C++11 on < 10.9
+wxWidgets.use       wxWidgets-3.0-cxx11
+
+depends_build       port:pkgconfig
+
+depends_lib         port:dbus \
+                    port:gettext \
+                    port:gnutls \
+                    port:libfilezilla \
+                    port:libidn \
+                    port:sqlite3 \
+                    port:xdg-utils \
+                    port:${wxWidgets.port}
+
+distname            ${name}_${version}_src
+
+use_bzip2           yes
+worksrcdir          filezilla-${version}
+
+patchfiles          patch-src-interface-buildinfo.cpp.diff \
+                    patch-skip-dylibcopy.diff
+
+# http://trac.filezilla-project.org/ticket/5473
+# http://sourceforge.net/p/tinyxml/patches/51/
+configure.args      --with-tinyxml=builtin \
+                    --with-pugixml=builtin \
+                    --disable-manualupdatecheck \
+                    --disable-autoupdatecheck \
+                    --with-wxdir=${wxWidgets.wxdir}
+
+configure.env       WXRC=${wxWidgets.wxrc}
+
+compiler.blacklist-append {clang < 900}
+
+destroot {
+    copy ${worksrcpath}/FileZilla.app ${destroot}${applications_dir}
+}
+
+livecheck.type      regex
+livecheck.url       ${homepage}download.php?type=client
+livecheck.regex     /${name}_(\[0-9.\]+)

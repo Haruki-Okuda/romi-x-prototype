@@ -1,0 +1,71 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           conflicts_build 1.0
+
+name                notmuch
+version             0.28.3
+categories          mail
+platforms           darwin
+license             GPL-3+
+maintainers         {seichter.de:macports @rseichter} openmaintainer
+description         The mail indexer
+long_description    \"Not much mail\" is what Notmuch thinks about your email \
+                    collection, even if you receive 12000 messages per month or have on the \
+                    order of millions of messages that you’ve been saving for decades. \
+                    Regardless, Notmuch will be able to quickly search all of it. It’s just \
+                    plain not much mail.
+
+homepage            https://notmuchmail.org
+master_sites        ${homepage}/releases/
+
+checksums           rmd160  17d98c379b9cf26606280709a6a3af940d0b97ef \
+                    sha256  4e212d8b4ae30da04edb05d836dcdb569488ff6760706cecb882488eb1710eec \
+                    size    921920
+
+depends_build       port:pkgconfig \
+                    port:python37 \
+                    port:py37-sphinx
+
+depends_lib         port:gmime \
+                    port:talloc \
+                    port:xapian-core \
+                    port:zlib
+
+patchfiles          patch-bindings-python-notmuch-globals.py.diff
+
+post-patch {
+    reinplace "s|@PREFIX@|${prefix}|g" ${worksrcpath}/bindings/python/notmuch/globals.py
+}
+
+conflicts_build     ${name} xcbuild
+
+if {[variant_isset universal]} {
+    # llvm-gcc-4.2: -E, -S, -save-temps and -M options are not allowed with multiple -arch flags
+    compiler.blacklist  *llvm-gcc-4.2
+}
+
+configure.args      --with-docs \
+                    --without-emacs \
+                    --without-ruby
+
+configure.python    ${prefix}/bin/python3.7
+
+# Add path to sphinx-build
+configure.env-append \
+                    PATH=${frameworks_dir}/Python.framework/Versions/3.7/bin:$env(PATH)
+build.env-append    {*}${configure.env}
+destroot.env-append {*}${configure.env}
+
+# disable silent rules
+build.args          V=1
+
+variant emacs description {EMACS support} {
+    depends_lib-append      port:emacs
+    configure.args-delete   --without-emacs
+    configure.args-append   --with-emacs
+}
+
+livecheck.type      regex
+livecheck.url       [lindex ${master_sites} 0]
+livecheck.regex     ${name}-(\[0-9.\]+)${extract.suffix}

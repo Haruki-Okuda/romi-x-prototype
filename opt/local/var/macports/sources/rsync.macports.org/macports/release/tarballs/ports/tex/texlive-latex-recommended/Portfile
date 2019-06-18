@@ -1,0 +1,65 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           texlive 1.0
+
+name                texlive-latex-recommended
+version             47392
+revision            0
+
+categories          tex
+maintainers         {dports @drkp}
+license             Copyleft Permissive
+description         TeX Live: LaTeX recommended packages
+long_description    A collection of recommended add-on packages for LaTeX which have widespread use.
+
+checksums           texlive-latex-recommended-47392-run.tar.xz \
+                    rmd160  c001dd46556ed0b9a9354d96cc87c39cb804f90e \
+                    sha256  2956d6845ab8d9c9732f879c9f3dfa9164f5c16a4c0a580dc43656601205c567 \
+                    texlive-latex-recommended-47392-doc.tar.xz \
+                    rmd160  f97511fd4319cb3382be1001ae29edfb32419142 \
+                    sha256  27d978b9d15215c2ffeafc378a3461ce317904691300c5fb11adb0edfdac007a \
+                    texlive-latex-recommended-47392-src.tar.xz \
+                    rmd160  1e89d497a9de61ee3d84b737dbc7dced25247cf0 \
+                    sha256  8d098cf8ed6c419c944ad71448dbb04ea53e45dc9455e3e8ea8fbce03821143d
+
+depends_lib         port:texlive-latex
+
+texlive.binaries    lwarpmk thumbpdf
+
+# beamer requires pgf; see #25478
+depends_lib-append port:pgf
+
+pre-activate {
+    # Handle conflicts for TL2018 upgrade
+    if { ![catch {set vers [lindex [registry_active texlive-latex-extra] 0]}]
+         && ([vercmp [lindex $vers 1] 47410] < 0) } {
+        registry_deactivate_composite texlive-latex-extra "" [list ports_nodepcheck 1]
+    }
+    if { ![catch {set vers [lindex [registry_active texlive-luatex] 0]}]
+         && ([vercmp [lindex $vers 1] 47444] < 0) } {
+        registry_deactivate_composite texlive-luatex "" [list ports_nodepcheck 1]
+    }
+
+    # Handle conflicts for TL2017 upgrade
+    # no version check on the first two; the ports are obsolete
+    if { ![catch {set vers [lindex [registry_active texlive-htmlxml] 0]}] } {
+        registry_deactivate_composite texlive-htmlxml "" [list ports_nodepcheck 1]
+    }
+    if { ![catch {set vers [lindex [registry_active texlive-math-extra] 0]}] } {
+        registry_deactivate_composite texlive-math-extra "" [list ports_nodepcheck 1]
+    }
+
+    if { ![catch {set vers [lindex [registry_active texlive-xetex] 0]}]
+         && ([vercmp [lindex $vers 1] 44370] < 0) } {
+        registry_deactivate_composite texlive-xetex "" [list ports_nodepcheck 1]
+    }
+    if { ![catch {set vers [lindex [registry_active texlive-latex-extra] 0]}]
+         && ([vercmp [lindex $vers 1] 44430] < 0) } {
+        registry_deactivate_composite texlive-latex-extra "" [list ports_nodepcheck 1]
+    }
+
+}
+
+
+texlive.texmfport

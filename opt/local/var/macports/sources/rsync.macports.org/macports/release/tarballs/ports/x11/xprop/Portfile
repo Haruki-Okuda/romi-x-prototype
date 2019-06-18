@@ -1,0 +1,29 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+
+name                xprop
+version             1.2.3
+categories          x11
+license             X11
+maintainers         {jeremyhu @jeremyhu} openmaintainer
+description         Property displayer for X11
+long_description    ${description}
+
+platforms           darwin
+
+homepage            https://www.x.org/
+master_sites        xorg:individual/app/
+use_bzip2           yes
+
+checksums           rmd160  be7a2e7658846687265097ed2abb2d16efd8e929 \
+                    sha256  d22afb28c86d85fff10a50156a7d0fa930c80ae865d70b26d805fd28a17a521b \
+                    size    149202
+
+depends_build       port:pkgconfig
+
+depends_lib         port:xorg-libX11
+
+livecheck.type      regex
+livecheck.regex     ${name}-(\[\\d.\]+)${extract.suffix}
+livecheck.url       http://xorg.freedesktop.org/archive/individual/app/?C=M&O=D

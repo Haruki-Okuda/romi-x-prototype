@@ -1,0 +1,51 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+PortGroup           compiler_blacklist_versions 1.0
+
+name                py-cryptography
+version             2.6.1
+revision            0
+categories-append   devel
+platforms           darwin
+license             BSD
+
+python.versions     27 34 35 36 37
+
+maintainers         {stromnov @stromnov} openmaintainer
+
+description         Package which provides cryptographic recipes and primitives to Python developers.
+long_description    ${description}
+
+homepage            https://github.com/pyca/cryptography
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  2bab285a27bfed6fff8addc2322b8db3687ef2d1 \
+                    sha256  26c821cbeb683facb966045e2064303029d572a87ee69ca5a1bf54bf55f93ca6 \
+                    size    491580
+
+platform macosx {
+    if {${os.major} < 11} {
+        # https://trac.macports.org/ticket/54519
+        # https://trac.macports.org/ticket/54753
+        # https://trac.macports.org/ticket/55079
+        patchfiles-append   patch-src__cffi_src_build_openssl.py.diff
+    }
+}
+
+if {${name} ne ${subport}} {
+    depends_lib-append  port:py${python.version}-setuptools \
+                        port:py${python.version}-asn1crypto \
+                        port:py${python.version}-six \
+                        port:py${python.version}-cffi
+
+    if {${python.version} < 34} {
+        depends_lib-append  port:py${python.version}-enum34 \
+                            port:py${python.version}-ipaddress
+    }
+
+    livecheck.type      none
+}

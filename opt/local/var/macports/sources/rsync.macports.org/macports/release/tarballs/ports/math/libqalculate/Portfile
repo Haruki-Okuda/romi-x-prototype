@@ -1,0 +1,59 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        qalculate libqalculate 2.8.2 v
+revision            0
+
+categories          math
+platforms           darwin
+maintainers         {gmail.com:jjstickel @jjstickel}
+license             GPL-2+
+
+description \
+                    libqalculate is math libary for expression evaluation \
+                    with units, variables and functions support and CAS \
+                    functionality.
+
+long_description \
+                    libqalculate is math libary for expression evaluation \
+                    with units, variables and functions support and CAS \
+                    functionality.  This library directly supports the \
+                    GUI interface qalculate-gtk or qalculate-kde.
+
+github.tarball_from releases
+
+checksums           rmd160  9ae3685ae05a9df3c7b779305659efac787a75f7 \
+                    sha256  12c41d9a56c89240d8f0e39cac98e66703c620b3a08cb6f39d54193199534a51 \
+                    size    1961405
+
+# autoreconf to reconfigure for intltool; use package's autogen script to avoid
+# conflict with gettext
+use_autoreconf      yes
+autoreconf.cmd      ./autogen.sh
+autoreconf.env      NOCONFIGURE=1
+
+depends_build-append \
+                    port:intltool \
+                    port:autoconf \
+                    port:automake \
+                    port:libtool \
+                    port:pkgconfig \
+                    port:doxygen
+
+depends_lib-append \
+                    port:gmp \
+                    port:mpfr \
+                    port:libxml2 \
+                    port:curl \
+                    port:icu \
+                    port:gettext \
+                    port:readline \
+                    port:libiconv
+
+patch {
+    reinplace "s|libtoolize|glibtoolize|g" ${worksrcpath}/autogen.sh
+}
+
+notes-append "Graphical plotting is enabled by installing gnuplot.\n"

@@ -1,0 +1,70 @@
+PortSystem 1.0
+
+name        xorg-libX11
+version     1.6.7
+categories  x11 devel
+license     X11
+maintainers {jeremyhu @jeremyhu} openmaintainer
+description X.org libX11
+homepage    https://www.x.org
+platforms   darwin macosx
+long_description libX11 is the main library used by X Window System applications to communicate with the X server.
+master_sites     xorg:individual/lib/
+
+distname    libX11-${version}
+checksums           sha1    5076f7853713d7db958a05f6fd1c18f7e111a0ad \
+                    rmd160  2d42cfb246dfbf0f6aeaddebd79bd79f8423f687 \
+                    sha256  910e9e30efba4ad3672ca277741c2728aebffa7bc526f04dcfa74df2e52a1348 \
+                    size    2290260
+
+use_bzip2   yes
+use_parallel_build      yes
+
+depends_build   port:pkgconfig \
+                port:xorg-xtrans \
+                port:xorg-xorgproto \
+                port:xorg-util-macros
+
+depends_lib     port:xorg-libXdmcp \
+                port:xorg-libXau \
+                port:xorg-libxcb \
+                port:xorg-xorgproto 
+
+configure.env-append RAWCPP=${configure.cpp}
+
+configure.args \
+    --without-xmlto \
+    --without-fop \
+    --disable-specs
+
+build.args V=1
+
+# Depending on ghostscript for the PDF documentation creates a dependency
+# loop, so you may want to install first without the docs variant
+variant docs description "Install extra documentation" {
+    depends_build-append \
+        port:xmlto \
+        port:fop \
+        port:xorg-sgml-doctools
+
+    depends_skip_archcheck-append \
+        xmlto
+
+    configure.args-delete \
+        --without-xmlto \
+        --without-fop \
+        --disable-specs
+
+    configure.args-append \
+        --with-xmlto \
+        --with-fop \
+        --enable-specs
+
+    configure.env-append \
+        FOP=${prefix}/bin/fop \
+        XMLTO=${prefix}/bin/xmlto
+}
+
+livecheck.type  regex
+livecheck.url   http://xorg.freedesktop.org/archive/individual/lib/?C=M&O=D
+livecheck.regex libX11-(\\d+(?:\\.\\d+)*)

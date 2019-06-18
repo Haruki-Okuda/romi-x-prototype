@@ -1,0 +1,47 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-rasterio
+version             1.0.22
+revision            0
+categories-append   gis
+platforms           darwin
+license             BSD
+
+python.versions     27 34 35 36 37
+
+maintainers         {stromnov @stromnov} openmaintainer
+
+description         Fast and direct raster I/O for Python programmers who use Numpy
+long_description    ${description}
+
+homepage            https://github.com/sgillies/rasterio
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  e8e74c8dfeecd995aa8a8dcd4268f26b2d54acf3 \
+                    sha256  31c68b1ed8684ccc4855daeb9fe6c42bf5d54bbade8f2ab225370b7169422d7d \
+                    size    1851443
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                        port:py${python.version}-cython
+
+    depends_lib-append  port:py${python.version}-setuptools \
+                        port:py${python.version}-affine \
+                        port:py${python.version}-attrs \
+                        port:py${python.version}-cligj \
+                        port:py${python.version}-numpy \
+                        port:py${python.version}-snuggs \
+                        port:py${python.version}-click-plugins \
+                        port:gdal
+
+    if { ${python.version} < 34 } {
+        depends_lib-append  port:py${python.version}-enum34
+    }
+
+    livecheck.type      none
+}

@@ -1,0 +1,37 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-partd
+version             0.3.10
+revision            0
+categories-append   devel
+platforms           darwin
+license             BSD
+supported_archs     noarch
+
+python.versions     27 34 35 36 37
+
+maintainers         {stromnov @stromnov} openmaintainer
+
+description         Appendable key-value storage.
+long_description    ${description}
+
+homepage            https://github.com/mrocklin/partd/
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  a3857f5edd4b49edc0cceaae7e39df307c3638df \
+                    sha256  33722a228ebcd1fa6f44b1631bdd4cff056376f89eb826d7d880b35b637bcfba \
+                    size    19076
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                        port:py${python.version}-setuptools
+    depends_lib-append  port:py${python.version}-locket \
+                        port:py${python.version}-toolz
+
+    livecheck.type      none
+}

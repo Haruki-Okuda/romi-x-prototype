@@ -1,0 +1,67 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem 1.0
+
+name                libcryptopp
+version             8.2.0
+categories          devel security
+platforms           darwin
+maintainers         {raphael @raphael-st} openmaintainer
+description         C++ class library of cryptographic schemes
+long_description    Crypto++ Library is a free C++ class library of \
+                    cryptographic schemes.
+
+homepage            https://www.cryptopp.com/
+license             Boost-1
+
+master_sites        ${homepage} \
+                    https://raw.githubusercontent.com/weidai11/website/master
+distname            cryptopp[strsed ${version} {g/\.//}]
+
+checksums           rmd160  cdb5f1b9152cfccc35c5cca3027437e60cf63dea \
+                    sha256  03f0e2242e11b9d19b28d0ec5a3fa8ed5cc7b27640e6bed365744f593e858058 \
+                    size    8859815
+
+use_zip             yes
+extract.mkdir       yes
+
+patchfiles          patch-GNUmakefile.diff
+
+use_configure       no
+
+variant universal {}
+
+proc _get_cryptopp_init_priority_flag {compiler} {
+    if {[string match "macports-gcc*" $compiler]} {
+        return " -DMACPORTS_GCC_COMPILER"
+    }
+    return ""
+}
+
+build.type          gnu
+build.target        dynamic static cryptest.exe
+if {[vercmp [macports_version] 2.5.99] >= 0} {
+build.env-append    "CXXFLAGS=[get_canonical_archflags cxx] -DNDEBUG [_get_cryptopp_init_priority_flag ${configure.compiler}]"
+} else {
+build.env-append    CXXFLAGS="[get_canonical_archflags cxx] -DNDEBUG [_get_cryptopp_init_priority_flag ${configure.compiler}]"
+}
+build.args-append   CXX=${configure.cxx} PREFIX=${prefix}
+
+test.run            yes
+test.cmd            ./cryptest.exe
+test.target         v
+
+destroot {
+    xinstall -m 755 -d ${destroot}${prefix}/include/cryptopp \
+        ${destroot}${prefix}/share/doc/${name}
+    xinstall -m 644 ${worksrcpath}/libcryptopp.a \
+        ${worksrcpath}/libcryptopp.dylib \
+        ${destroot}${prefix}/lib
+    xinstall -m 644 {*}[glob ${worksrcpath}/*.h] \
+        ${destroot}${prefix}/include/cryptopp/
+    xinstall -m 644 -W ${worksrcpath} Readme.txt License.txt \
+        ${destroot}${prefix}/share/doc/${name}/
+}
+
+livecheck.type      regex
+livecheck.regex     "Crypto\\+\\+ (\\d+(?:\\.\\d+)*)"

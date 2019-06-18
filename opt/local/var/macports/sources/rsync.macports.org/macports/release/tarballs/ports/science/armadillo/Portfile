@@ -1,0 +1,56 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem                      1.0
+PortGroup                       cmake 1.0
+PortGroup                       compiler_blacklist_versions 1.0
+PortGroup                       mpi 1.0
+
+name                            armadillo
+version                         9.400.2
+revision                        0
+categories                      science
+platforms                       darwin
+maintainers                     {mps @Schamschula} openmaintainer
+license                         Apache-2
+
+description                     Armadillo C++ linear algebra library
+
+long_description                Armadillo is a C++ linear algebra library (matrix maths) \
+                                aiming towards a good balance between speed and ease of use. \
+                                Integer, floating point and complex numbers are supported, \
+                                as well as a subset of trigonometric and statistics functions. \
+                                Various matrix decompositions are provided through optional \
+                                integration with LAPACK or high-performance LAPACK-compatible \
+                                libraries.
+
+homepage                        http://arma.sf.net/
+master_sites                    sourceforge:project/arma
+
+use_xz                          yes
+
+checksums                       rmd160  c9c143b9af8f870f612119ec757020e3730d140f \
+                                sha256  2e49b1c6e838c51f0229951b009e54e190a19de9abecc33aed37878e7d0f94a7 \
+                                size    4795600
+
+depends_build-append            port:pkgconfig
+
+depends_lib-append              port:hdf5
+
+cmake.out_of_source             yes
+
+mpi.setup
+mpi.enforce_variant             hdf5
+ 
+configure.args-append           -DARPACK_LIBRARY=
+
+variant arpack description {compile with ARPACK support} {
+    depends_lib-append          port:arpack
+    configure.args-delete       -DARPACK_LIBRARY=
+}
+
+# Snow Leopard (and older) will fail to build with the error "Need a newer compiler"
+compiler.blacklist-append       *gcc-3.* *gcc-4.0 *gcc-4.2 {clang <= 211.10.1}
+
+livecheck.type                  regex
+livecheck.url                   ${homepage}download.html
+livecheck.regex                 /${name}-(\[0-9.\]+)${extract.suffix}

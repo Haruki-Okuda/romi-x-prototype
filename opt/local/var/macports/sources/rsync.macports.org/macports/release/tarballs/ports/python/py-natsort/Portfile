@@ -1,0 +1,40 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-natsort
+set realName natsort
+version             4.0.4
+platforms           darwin
+supported_archs     noarch
+license             MIT
+maintainers         {phas.ubc.ca:jfcaron @jfcaron3} openmaintainer
+
+description         Natural sorting for Python
+long_description    When you try to sort a list of strings that \
+                    contain numbers, the normal Python sort algorithm \
+                    sorts lexicographically, so you might not get the \
+                    results that you expect. `natsort` provides \
+                    a function `natsorted` that helps sort lists \
+                    'naturally', either as real numbers (i.e. \
+                    signed/unsigned floats or ints), or as versions.
+homepage            https://github.com/SethMMorton/$realName
+
+master_sites        pypi:n/$realName
+distname            $realName-${version}
+
+checksums           rmd160  7f7ef1bab57862009369c1e97f8b171f8bb17f3f \
+                    sha256  c76ba3e85fba78f276ac06e4d47f2230d1070f9c19413b2a0bfe7de6af311839
+
+python.versions     27 34 35 36
+
+if {${subport} ne ${name}} {
+    depends_build       port:py${python.version}-setuptools
+    depends_run         port:py${python.version}-pyicu
+    livecheck.type      none
+} else {
+    livecheck.type      regex
+    livecheck.url       https://pypi.python.org/pypi/$realName
+    livecheck.regex     $realName-(\\d+(?:\\.\\d+)*)${extract.suffix}
+}

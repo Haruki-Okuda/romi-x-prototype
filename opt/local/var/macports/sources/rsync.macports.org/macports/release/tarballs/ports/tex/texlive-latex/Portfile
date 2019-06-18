@@ -1,0 +1,45 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           texlive 1.0
+
+name                texlive-latex
+version             47377
+revision            0
+
+categories          tex
+maintainers         {dports @drkp}
+license             Copyleft Permissive
+description         TeX Live: LaTeX fundamental packages
+long_description    These packages are either mandated by the core LaTeX team, or very widely used and strongly recommended in practice.
+
+checksums           texlive-latex-47377-run.tar.xz \
+                    rmd160  1531cbc3aa60bc90e3c49c2b98506874d981f347 \
+                    sha256  6ca9ae5d09d5c0507cc888271f68d76c6117d408e9609dd4ee4d58720062b303 \
+                    texlive-latex-47377-doc.tar.xz \
+                    rmd160  195939443c373cabcf96d5660fd12eeeaf3f8d17 \
+                    sha256  7cc7a2649e655c9764c40aa41c24bb9b248cbfb25cf9ddd7da1aaebda4d58990 \
+                    texlive-latex-47377-src.tar.xz \
+                    rmd160  7af692c52f4a5378a1bd130c76e2808c14d0ec8f \
+                    sha256  5bff840fca8f2dd784e8ed8f447426844aaa21a8dc743f99f03c0a2493655577
+
+depends_lib         port:texlive-basic
+
+texlive.formats      \
+    {1 latex pdftex language.dat {-translate-file=cp227.tcx *latex.ini}} \
+    {1 pdflatex pdftex language.dat {-translate-file=cp227.tcx *pdflatex.ini}} \
+    {1 dvilualatex luatex language.dat,language.dat.lua {dvilualatex.ini}} \
+    {1 lualatex luatex language.dat,language.dat.lua {lualatex.ini}} \
+    {0 luajitlatex luajittex language.dat,language.dat.lua {lualatex.ini}} \
+    {1 mptopdf pdftex - {-translate-file=cp227.tcx mptopdf.tex}}
+
+texlive.maps      \
+    {Map charter.map} \
+    {Map fpls.map} \
+    {Map pazo.map} \
+    {Map utopia.map}
+
+texlive.binaries    dvilualatex latex lualatex mptopdf pdflatex
+
+
+texlive.texmfport

@@ -1,0 +1,43 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           cmake 1.0
+PortGroup           cxx11 1.1
+
+name                chipmunk
+version             7.0.2
+revision            0
+categories          devel
+platforms           darwin
+license             MIT
+
+maintainers         {stromnov @stromnov} openmaintainer
+
+description         Fast and lightweight 2D rigid body physics library in C
+long_description    ${description}
+
+homepage            http://chipmunk-physics.net
+master_sites        http://chipmunk-physics.net/release/Chipmunk-7.x/
+
+distname            Chipmunk-${version}
+extract.suffix      .tgz
+
+checksums           rmd160  09d1c442040e1530642dc2e078ac62b7ea8f71f3 \
+                    sha256  288c8465fcaa671bab890c0b24627816efa10da2c5eabbeb36feb0d6deb1ca5a
+
+use_parallel_build  yes
+
+configure.args-append   -DBUILD_DEMOS:BOOL=OFF \
+                        -DINSTALL_DEMOS:BOOL=OFF \
+                        -DBUILD_SHARED:BOOL=ON \
+                        -DBUILD_STATIC:BOOL=ON \
+                        -DINSTALL_STATIC:BOOL=ON
+
+variant demos description "compile and install a demo application" {
+    configure.args-replace  -DBUILD_DEMOS:BOOL=OFF -DBUILD_DEMOS:BOOL=ON
+    configure.args-replace  -DINSTALL_DEMOS:BOOL=OFF -DINSTALL_DEMOS:BOOL=ON
+}
+
+livecheck.type      regex
+livecheck.url       ${master_sites}
+livecheck.regex     {Chipmunk-(\d+(?:\.\d+)*)}

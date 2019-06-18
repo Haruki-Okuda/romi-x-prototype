@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        libevent libevent 2.1.8-stable release-
+version             [lindex [split ${version} -] 0]
+categories          devel
+platforms           darwin
+license             BSD
+maintainers         {gmail.com:jerryyhom @jerryyhom} openmaintainer
+
+description         An event notification library
+
+long_description    The libevent API provides a mechanism to execute \
+                    a callback function when a specific event occurs \
+                    on a file descriptor or after a timeout has been \
+                    reached. Furthermore, libevent also support \
+                    callbacks due to signals or regular timeouts.
+
+homepage            http://libevent.org
+
+checksums           rmd160  f23ad93d555089535085c99f3f8cbb9ebae4fd53 \
+                    sha256  d53e88f2b31fbccab93f6b1e54fe7f4c1d536b6d8250c95cd42dbc14f958baeb
+
+depends_lib         path:lib/libssl.dylib:openssl
+
+patchfiles          patch-libressl-2-7.diff
+
+use_autoreconf      yes
+
+test.run            yes
+test.target         verify
+
+livecheck.url       ${homepage}
+livecheck.version   ${version}
+livecheck.type      regex
+livecheck.regex     ${name}-(\\d+(?:\\.\\d+)*)-stable${extract.suffix}

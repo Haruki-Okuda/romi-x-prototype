@@ -1,0 +1,199 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           gobject_introspection 1.0
+PortGroup           active_variants 1.1
+
+name                libgda5
+set gname           libgda
+version             5.2.8
+revision            1
+license             {GPL-2 LGPL}
+set branch          [join [lrange [split ${version} .] 0 1] .]
+description         GDA provides uniform access to different kinds of data sources.
+long_description    GNU Data Access (GDA) is an attempt to provide \
+                    uniform access to different kinds of data sources \
+                    (databases, information servers, mail spools, etc).
+maintainers         {devans @dbevans} openmaintainer
+categories          databases gnome
+platforms           darwin
+homepage            http://www.gnome-db.org/
+distname            libgda-${version}
+master_sites        gnome:sources/${gname}/${branch}/
+
+use_xz              yes
+
+checksums           rmd160  8aeb143a77169a71e671bc90ef85c8bf5b33f62b \
+                    sha256  e2876d987c00783ac3c1358e9da52794ac26f557e262194fcba60ac88bafa445 \
+                    size    12506208
+
+depends_build       port:pkgconfig \
+                    port:intltool \
+                    port:itstool \
+                    port:yelp-tools \
+                    port:gtk-doc \
+                    port:gnome-common \
+                    port:autoconf \
+                    port:automake \
+                    port:libtool
+
+depends_lib         port:desktop-file-utils \
+                    port:readline \
+                    port:gtk3 \
+                    path:bin/dot:graphviz \
+                    port:goocanvas2 \
+                    port:iso-codes \
+                    port:libsecret \
+                    port:libsoup \
+                    port:libgcrypt \
+                    port:libxml2 \
+                    port:libxslt \
+                    port:ncurses
+
+depends_run         port:adwaita-icon-theme
+
+gobject_introspection yes
+
+patchfiles          patch-configure.ac.diff \
+                    patch-bdb.diff \
+                    patch-use-embedded-sqlite3.diff
+
+# reconfigure using upstream autogen.sh for intltool 0.51 compatibility
+
+post-patch {
+    xinstall -m 755 ${filespath}/autogen.sh ${worksrcpath}
+}
+
+configure.cmd       ./autogen.sh
+
+#
+# use embedded libsqlite3 rather than the system version
+# to avoid dlopen 'Can't find file libsqlite3.so' errors
+#
+
+configure.args      --enable-system-sqlite=no \
+                    --enable-gda-gi=yes \
+                    --enable-gdaui-gi=yes \
+                    --disable-silent-rules \
+                    --with-graphviz \
+                    --without-gtksourceview \
+                    --with-ldap=no \
+                    --with-bdb=no \
+                    --with-mdb=no \
+                    --with-mysql=no \
+                    --with-postgres=no \
+                    --with-oracle=no \
+                    --with-firebird=no \
+                    --with-java=no \
+                    --with-jni=no
+
+variant vala description {Build vala bindings and extensions} {
+    depends_lib-append      port:vala \
+                            port:libgee
+    configure.env-append    VALA_API_VERSION=0.42
+    configure.args-append   --enable-vala=yes \
+                            --enable-gdaui-vala=yes \
+                            --enable-vala-extensions=yes
+}
+
+default_variants    +vala
+        
+variant mysql5 \
+    description {support for current MySQL 5.x} {
+    depends_lib-append  path:bin/mysql_config5:mysql5
+    configure.env-append    \
+        MYSQL_CONFIG=${prefix}/lib/mysql5/bin/mysql_config
+    configure.args-delete   --with-mysql=no
+    configure.args-append   --with-mysql=${prefix}/lib/mysql5
+    configure.cppflags-append   "-I${prefix}/include/mysql5/mysql"
+}
+
+variant postgresql92 conflicts postgresql93 postgresql94 postgresql95 postgresql96 \
+    description {support for PostgreSQL 9.2.x} {
+    configure.cppflags-append   "-I${prefix}/include/postgresql92"
+    depends_lib-append  port:postgresql92
+    configure.args-delete   --with-postgres=no
+    configure.args-append   --with-postgres=${prefix}/lib/postgresql92
+}
+
+variant postgresql93 conflicts postgresql92 postgresql94 postgresql95 postgresql96 \
+    description {support for PostgreSQL 9.3.x} {
+    configure.cppflags-append   "-I${prefix}/include/postgresql93"
+    depends_lib-append  port:postgresql93
+    configure.args-delete   --with-postgres=no
+    configure.args-append   --with-postgres=${prefix}/lib/postgresql93
+}
+
+variant postgresql94 conflicts postgresql92 postgresql93 postgresql95 postgresql96 \
+    description {support for PostgreSQL 9.4.x} {
+    configure.cppflags-append   "-I${prefix}/include/postgresql94"
+    depends_lib-append  port:postgresql94
+    configure.args-delete   --with-postgres=no
+    configure.args-append   --with-postgres=${prefix}/lib/postgresql94
+}
+
+variant postgresql95 conflicts postgresql92 postgresql93 postgresql94 postgresql96 \
+    description {support for PostgreSQL 9.5.x} {
+    configure.cppflags-append   "-I${prefix}/include/postgresql95"
+    depends_lib-append  port:postgresql95
+    configure.args-delete   --with-postgres=no
+    configure.args-append   --with-postgres=${prefix}/lib/postgresql95
+}
+
+variant postgresql96 conflicts postgresql92 postgresql93 postgresql94 postgresql95 \
+    description {support for PostgreSQL 9.6.x} {
+    configure.cppflags-append   "-I${prefix}/include/postgresql96"
+    depends_lib-append  port:postgresql96
+    configure.args-delete   --with-postgres=no
+    configure.args-append   --with-postgres=${prefix}/lib/postgresql96
+}
+
+if {![variant_isset postgresql92] && \
+    ![variant_isset postgresql93] && \
+    ![variant_isset postgresql94] && \
+    ![variant_isset postgresql95] } {
+    default_variants +postgresql96
+}
+
+variant db53 conflicts db60 \
+    description {support for Berkeley DB 5.3.x} {
+    set db_version 53
+    depends_lib-append  port:db${db_version}
+    configure.cppflags-append "-I${prefix}/include/db${db_version}"
+    configure.args-delete   --with-bdb=no
+    configure.args-append   --with-bdb=${prefix} \
+                            --with-bdb-libdir-name=lib/db${db_version}
+}
+
+variant db60 conflicts db53 \
+    description {support for Berkeley DB 6.0.x} {
+    set db_version 60
+    depends_lib-append  port:db${db_version}
+    configure.cppflags-append "-I${prefix}/include/db${db_version}"
+    configure.args-delete   --with-bdb=no
+    configure.args-append   --with-bdb=${prefix} \
+                            --with-bdb-libdir-name=lib/db${db_version}
+}
+
+if {![variant_isset db53]} {
+    default_variants +db60
+}
+
+variant quartz {}
+
+if {[variant_isset quartz]} {
+    require_active_variants gtk3 quartz
+} else {
+    require_active_variants gtk3 x11
+    depends_run-append      port:gnome-keyring \
+                            port:yelp
+}
+
+post-activate {
+    system "${prefix}/bin/update-desktop-database ${prefix}/share/applications"
+    system "${prefix}/bin/gtk-update-icon-cache-3.0 -f -t ${prefix}/share/icons/hicolor"
+}
+
+livecheck.type          gnome
+livecheck.name          ${gname}
+livecheck.regex         "LATEST-IS-(\\d+\\.\[02468\](?:\\.\\d+)*)"

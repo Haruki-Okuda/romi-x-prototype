@@ -1,0 +1,15 @@
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/debug_inspector-0.0.3/ext/debug_inspector
+/Users/nishiokaharuki/.rbenv/versions/2.4.1/bin/ruby -r ./siteconf20190617-18106-3nh5f1.rb extconf.rb
+creating Makefile
+
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.bundle
+
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 debug_inspector.bundle ./.gem.20190617-18106-hn5mw7

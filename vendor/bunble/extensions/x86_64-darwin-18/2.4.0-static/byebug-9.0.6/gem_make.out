@@ -1,0 +1,19 @@
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/byebug-9.0.6/ext/byebug
+/Users/nishiokaharuki/.rbenv/versions/2.4.1/bin/ruby -r ./siteconf20190617-18106-1gtme3o.rb extconf.rb
+creating Makefile
+
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/byebug-9.0.6/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/byebug-9.0.6/ext/byebug
+make "DESTDIR="
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.bundle
+
+current directory: /Users/nishiokaharuki/romi-x/romi-x-prototype/vendor/bunble/gems/byebug-9.0.6/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.bundle ./.gem.20190617-18106-v3h24l/byebug

@@ -1,0 +1,145 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           compilers 1.0
+
+github.setup        JuliaLang julia 0.6.2 v
+revision            3
+categories-append   lang math science
+maintainers         nomaintainer
+platforms           darwin
+license             MIT
+homepage            http://julialang.org
+
+compilers.choose    fc f77 f90
+compilers.setup     require_fortran -g95
+
+description         The Julia Language: A fresh approach to technical computing.
+long_description    Julia is a high-level, high-performance dynamic programming \
+                    language for technical computing, with syntax that is familiar \
+                    to users of other technical computing environments.
+
+github.tarball_from releases
+
+distfiles           ${name}-${version}-full${extract.suffix}
+
+checksums           rmd160  c5a50b478cbef04ce2937c46173ebc63d9403934 \
+                    sha256  1e34c13091c9ddb47cf87a51566d94a06613f3db3c483b8f63b276e416dd621b
+
+# Force buildbot to skip this since julia builds its own blas; see #45101
+archive_sites
+
+set llvm_ver        4.0
+
+depends_lib-append  port:llvm-${llvm_ver} \
+    port:curl \
+    port:pcre2 \
+    port:gmp \
+    port:mpfr \
+    port:SuiteSparse_UMFPACK \
+    port:SuiteSparse_CHOLMOD \
+    port:SuiteSparse_AMD \
+    port:SuiteSparse_CAMD \
+    port:SuiteSparse_COLAMD \
+    port:SuiteSparse_SPQR \
+    port:fftw-3 \
+    port:fftw-3-single \
+    port:ncurses \
+    port:arpack \
+    port:libgit2 \
+    path:lib/libopenblas.dylib:OpenBLAS
+
+use_configure       no
+# use_parallel_build  no
+
+post-extract {
+    file mkdir ${worksrcpath}/usr/lib
+    ln -s ${prefix}/lib/libfftw3.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libfftw3_threads.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libfftw3f.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libfftw3f_threads.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libpcre2-8.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libgmp.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libmpfr.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libumfpack.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libcholmod.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libsuitesparseconfig.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libarpack.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libopenblas.dylib ${worksrcpath}/usr/lib/
+    ln -s ${prefix}/lib/libgit2.dylib ${worksrcpath}/usr/lib/
+}
+
+build {}
+
+pre-destroot {
+    destroot.args-append \
+        CC=${configure.cc} \
+        CXX=${configure.cxx} \
+        FC=${configure.fc} \
+        USE_SYSTEM_LLVM=1 \
+        LLVM_CONFIG=llvm-config-mp-${llvm_ver} \
+        USE_SYSTEM_LIBUNWIND=1 \
+        USE_SYSTEM_LIBM=1 \
+        USE_SYSTEM_GMP=1 \
+        USE_SYSTEM_MPFR=1 \
+        USE_SYSTEM_ZLIB=1 \
+        USE_SYSTEM_PCRE=1 \
+        USE_SYSTEM_FFTW=1 \
+        USE_SYSTEM_ARPACK=1 \
+        USE_SYSTEM_SUITESPARSE=1 \
+        USE_SYSTEM_LIBGIT2=1 \
+        USE_SYSTEM_BLAS=1 \
+        USE_SYSTEM_LAPACK=1 \
+        USE_BLAS64=0 \
+        LIBBLAS=-lopenblas \
+        LIBBLASNAME=libopenblas \
+        LIBLAPACK=-lopenblas \
+        LIBLAPACKNAME=libopenblas
+}
+
+post-destroot {
+    # julia doesn't do destroot quite right
+    set dpw ${destroot}${worksrcpath}
+    delete ${destroot}${prefix}/bin
+    move [glob $dpw/julia-*/bin] ${destroot}${prefix}/bin
+    move [glob $dpw/julia-*/etc/julia] ${destroot}${prefix}/etc
+    move [glob $dpw/julia-*/include/julia] ${destroot}${prefix}/include
+    move [glob $dpw/julia-*/lib/julia] ${destroot}${prefix}/lib
+    move [glob $dpw/julia-*/share/julia] ${destroot}${prefix}/share
+
+    move [glob $dpw/julia-*/lib/libjulia.${version}.dylib] ${destroot}${prefix}/lib
+    move [glob $dpw/julia-*/lib/libjulia-debug.${version}.dylib] ${destroot}${prefix}/lib
+    move [glob $dpw/julia-*/lib/libjulia.${version}.dylib.dSYM] ${destroot}${prefix}/lib
+    move [glob $dpw/julia-*/lib/libjulia-debug.${version}.dylib.dSYM] ${destroot}${prefix}/lib
+
+    set version_short   [join [lrange [split ${version} .] 0 1] .]
+    ln -sf libjulia.${version}.dylib       ${destroot}${prefix}/lib/libjulia.dylib
+    ln -sf libjulia_debug.${version}.dylib ${destroot}${prefix}/lib/libjulia_debug.dylib
+    ln -sf libjulia.${version}.dylib       ${destroot}${prefix}/lib/libjulia.${version_short}.dylib
+    ln -sf libjulia_debug.${version}.dylib ${destroot}${prefix}/lib/libjulia_debug.${version_short}.dylib
+
+    delete ${destroot}${prefix}/var
+
+    foreach b {julia julia-debug} {
+        system -W ${destroot}${prefix}/bin "install_name_tool -add_rpath ${prefix}/lib $b"
+    }
+}
+
+variant blas64 description {Build internal OpenBLAS with 64-bit interface} {
+    depends_lib-delete \
+        port:OpenBLAS
+
+    pre-destroot {
+        destroot.args-delete \
+            USE_SYSTEM_BLAS=1 \
+            USE_SYSTEM_LAPACK=1 \
+            USE_BLAS64=0 \
+            LIBBLAS=-lopenblas \
+            LIBBLASNAME=libopenblas \
+            LIBLAPACK=-lopenblas \
+            LIBLAPACKNAME=libopenblas
+    }
+}
+
+github.livecheck.regex  {([^"-]+)}

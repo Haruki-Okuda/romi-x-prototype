@@ -1,0 +1,36 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+name                p5-cgi
+perl5.branches      5.26 5.28
+perl5.setup         CGI 4.42 ../../authors/id/L/LE/LEEJO
+license             Artistic-2
+maintainers         nomaintainer
+description         An easy-to-use Perl5 library for writing World Wide \
+                    Web CGI scripts.
+long_description    ${description} CGI is considered to be a legacy \
+                    module and is in maintenance mode for critical issues only.
+
+platforms           darwin
+
+checksums           rmd160  c5b91621736ddaea9cbf0901ec1bb7452d67e37a \
+                    sha256  11d308e7dad2312d65747a7fdec5d0c22024c28df5e882e829ca1553482024e7 \
+                    size    203529
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-test-deep \
+                    port:p${perl5.major}-test-nowarnings \
+                    port:p${perl5.major}-test-warn
+
+    depends_lib-append \
+                    port:p${perl5.major}-html-parser
+
+    supported_archs noarch
+}
+
+livecheck.type      regex
+livecheck.url       https://cpan.metacpan.org/authors/id/L/LE/LEEJO
+livecheck.regex     "CGI-(\\d+(?:\\.\\d+)*)"

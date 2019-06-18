@@ -1,0 +1,25 @@
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        leesavide abcm2ps 8.14.2 v
+categories          print audio
+platforms           darwin
+maintainers         nomaintainer
+license             GPL-2+
+description         abcm2ps converts abc music tunes to PostScript
+long_description    abcm2ps is a package that converts music tunes from \
+                    ABC format to PostScript. It introduces many \
+                    extensions to the ABC language that make it suitable \
+                    for classical music.
+homepage            http://moinejf.free.fr/
+
+checksums           rmd160  c53fe7256a694df18be2f07bb3072f3ee87d8e10 \
+                    sha256  ec0dd26725b101817f208d419d015df62316cce040fb4fa3fc4bba188b593006 \
+                    size    258334
+
+configure.args      --CC=${configure.cc} --docdir=${prefix}/share/doc
+
+build.target
+
+test.run            yes
+test.target         test

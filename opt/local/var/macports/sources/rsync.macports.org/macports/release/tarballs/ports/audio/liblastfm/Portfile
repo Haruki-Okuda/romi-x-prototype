@@ -1,0 +1,28 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           qt4 1.0
+PortGroup           cmake 1.0
+
+github.setup        lastfm liblastfm 1.0.9
+categories          audio
+license             GPL-3
+maintainers         {michaelld @michaelld} openmaintainer
+
+description         A set of libraries allowing use of the Last.fm site services.
+long_description    liblastfm is a collection of libraries to help you \
+integrate Last.fm services into your rich desktop software. It is \
+officially supported software developed by Last.fm staff.
+
+platforms           darwin
+
+checksums           rmd160 623dcd6ef8f0e2ce0a06d1a215ec266ad793157e \
+                    sha256 a3f048ca4f0581a13498f651d203b548475ea276d7b9b9eba9e219de75571127
+
+depends_lib-append  port:libsamplerate \
+                    port:fftw-3-single
+
+# do VPATH (out of source tree) build
+
+cmake.out_of_source yes

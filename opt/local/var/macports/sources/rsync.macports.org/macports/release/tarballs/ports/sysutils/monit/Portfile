@@ -1,0 +1,63 @@
+PortSystem 1.0
+
+name                monit
+version             5.25.2
+categories          sysutils
+platforms           darwin freebsd linux netbsd openbsd solaris
+license             GPL-3
+maintainers         nomaintainer
+
+description         monit is a utility for managing and monitoring, processes, \
+                    files, directories and devices on a UNIX system.
+long_description    Monit can start a process if it does not run, restart a process \
+                    if it does not respond and stop a process if it uses too many resources. \
+                    You can use monit to monitor files, directories and devices for changes, \
+                    such as timestamp changes, checksum changes or size changes. You can also \
+                    monitor remote hosts\; monit can ping a remote host and can check TCP/IP \
+                    port connections and server protocols. Monit is controlled via an easy \
+                    to use control file based on a free-format, token-oriented syntax. Monit \
+                    logs to syslog or to its own log file and notifies you about error \
+                    conditions and recovery status via customizable alert.
+
+homepage            https://mmonit.com/monit/
+master_sites        ${homepage}dist/
+
+checksums           rmd160 5691b306930cfa8493c771bf79d061ddeefca440 \
+                    sha256 aa0ce6361d1155e43e30a86dcff00b2003d434f221c360981ced830275abc64a \
+                    size   1354704
+
+depends_build       bin:flex:flex bin:bison:bison
+depends_lib         path:lib/libssl.dylib:openssl
+
+patchfiles          patch-monitrc.diff
+
+post-patch {
+    reinplace "s|@PREFIX@|${prefix}|g" ${worksrcpath}/monitrc
+}
+
+configure.args      --with-ssl-dir=${prefix}
+
+platform freebsd {
+    build.type      gnu
+}
+
+platform netbsd {
+    build.type      gnu
+}
+
+platform openbsd {
+    build.type      gnu
+}
+
+destroot.keepdirs   ${destroot}${prefix}/etc/monit.d
+post-destroot {
+    xinstall -m 700 ${worksrcpath}/monitrc ${destroot}${prefix}/etc/monitrc
+
+    xinstall -d ${destroot}${prefix}/share/doc/${name}
+    xinstall -m 444 -W ${worksrcpath} CONTRIBUTORS COPYING README \
+        ${destroot}${prefix}/share/doc/${name}
+}
+
+startupitem.create     yes
+startupitem.executable ${prefix}/bin/monit -I -c ${prefix}/etc/monitrc
+

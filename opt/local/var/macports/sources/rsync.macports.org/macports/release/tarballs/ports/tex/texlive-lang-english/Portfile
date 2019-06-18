@@ -1,0 +1,33 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           texlive 1.0
+
+name                texlive-lang-english
+version             47419
+revision            0
+
+categories          tex
+maintainers         {dports @drkp}
+license             Copyleft Permissive
+description         TeX Live: US and UK English
+long_description    Support for, and documentation in, English.
+
+checksums           texlive-lang-english-47419-run.tar.xz \
+                    rmd160  642e24d7dfc522f9620db5e827fa7808e6228396 \
+                    sha256  553e7791d6db494636438dbf96384fb5a73e857f53ebd7f7eec59a3f3bcb040c \
+                    texlive-lang-english-47419-doc.tar.xz \
+                    rmd160  87b620ac6cd8b7d67609bde56b7d07e53e47a9c5 \
+                    sha256  dc0cf3c1684b0bb3f6c9c5e94c62fbeab9d1a624d02ee32085751168bd19df39 \
+                    texlive-lang-english-47419-src.tar.xz \
+                    rmd160  e7c6842d2ea74c722dee43c00adcbf033d7acccd \
+                    sha256  5c2fcd64701d0c019dcdddab0b86c11c4b3624369c6a9c1bd73c99b22b2dbf13
+
+depends_lib         port:texlive-basic
+
+texlive.languages      \
+    {ukenglish loadhyph-en-gb.tex 2 3 {british UKenglish} {hyph-en-gb.pat.txt} {hyph-en-gb.hyp.txt} {} } \
+    {usenglishmax loadhyph-en-us.tex 2 3 {} {hyph-en-us.pat.txt} {hyph-en-us.hyp.txt} {} }
+
+
+texlive.texmfport
