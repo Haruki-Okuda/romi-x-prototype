@@ -238,3 +238,1623 @@ header {
   border-radius: 0 0 2px 2px;
   font-size: 14px;
 }
+
+
+
+/* !HTML5 elements
+---------------------------------------------------------- */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section
+{ display: block;}
+
+/* !Reseting
+---------------------------------------------------------- */
+body, div, pre, p, blockquote, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, th, td, figure, figcaption
+{ margin: 0; padding: 0;}
+input, textarea
+{ margin: 0; font-size: 100%;}
+label
+{ cursor: pointer;}
+table
+{ border-collapse: collapse; border-spacing: 0; font-size: 100%;}
+fieldset, img
+{ border: 0;}
+img
+{ max-width: 100%; width: 100%; height: auto; vertical-align: top;}
+address, caption, cite, code, dfn, em, th, var
+{ font-style: normal; font-weight: normal;}
+ol, ul
+{ list-style: none;}
+caption, th
+{ text-align: left;}
+h1, h2, h3, h4, h5, h6
+{ font-size: 100%; font-weight: normal;}
+q:after, q:before
+{ content:'';}
+a, input
+{ outline: none; }
+input, textarea
+{ border-radius: 0; font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", Arial, Helvetica, Verdana, sans-serif; }
+input[type="button"],input[type="submit"]
+{ -webkit-appearance: none; background: none; border: none; padding: 0; cursor: pointer;}
+abbr, acronym
+{ border: 0;}
+*
+{ -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box;}
+
+/* !Clearfix
+---------------------------------------------------------- */
+.clearfix
+{
+  display: block;
+  min-height: 1%;
+}
+.clearfix:after
+{
+  clear: both;
+  content:".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+* html .clearfix
+{
+  height: 1%;
+  /*\*//*/
+  height: auto;
+  overflow: hidden;
+  /**/
+}
+
+a { color: #000000; /* 青 */ }
+a:hover { color: #005580; /* 濃い青 */ text-decoration: underline;}
+
+/* ボタン
+---------------------------------------------------- */
+.btn {
+  display: block;
+  margin: 0 0 30px 0;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn a {
+  display: block;
+  text-align: center;
+  padding: .7em 1em;
+  line-height: 1.5;
+  text-decoration: none;
+  font-size: 20px;
+  font-size: 2.0rem;
+  font-weight: bold;
+  text-shadow: none;
+  -webkit-transition: all .3s linear;
+}
+
+.btn a::after {
+  font-family: 'FontAwesome';
+  content: "\f138";
+  margin-left: 10px;
+}
+
+.btn.green a {
+  border: 1px solid #5dc5b9; /* ミントグリーン */
+  color: #5dc5b9; /* ミントグリーン */
+}
+
+.btn.green a:hover {
+  background-color: #5dc5b9; /* ミントグリーン */
+  color: #fff;
+}
+
+/* 改行
+---------------------------------------------------- */
+@media print, screen and (min-width:768px){
+
+  .sp-block { display: inline;}
+
+}
+
+@media print, screen and (max-width:767px){
+
+  .sp-block { display: block;}
+
+}
+
+
+/*
+======================================================
+  body
+--------------------------------------------------- */
+
+html { font-size: 62.5%;}
+
+body {
+  font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
+  -webkit-text-size-adjust: none;
+  line-height: 1;
+  color: #1b1b1b;
+  font-size: 16px;
+  font-size: 1.6rem;
+  word-wrap: break-word;
+  background-color: #1b1b1b;
+    border: none;
+    padding: 0;
+}
+
+::selection { background: #3b3f3f; /* ヘリオスブラック */ color: #fff;}
+::-moz-selection { background: #3b3f3f; /* ヘリオスブラック */ color: #fff;}
+
+/*
+======================================================
+  header
+--------------------------------------------------- */
+.lp-header {
+  text-align: center;
+  background-image: url(http://transitmarketing.jp/wp-content/uploads/2019/04/AdobeStock_161385494_m.jpeg);
+  background-repeat: no-repeat;
+  background-position:center center;
+  background-size: cover;
+  animation: fadeIn 10s ease 0s 1 normal;
+  -webkit-animation: fadeIn 5s ease 0s 1 normal;
+}
+
+@keyframes fadeIn {
+  0% { display: none; opacity: 0;}
+  1% { display: block; opacity: 0;}
+  100% { display: block; opacity: 1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% { display: none; opacity: 0;}
+  1% { display: block; opacity: 0;}
+  100% { display: block; opacity: 1;}
+}
+
+.bk-rgba {
+  background: rgba(255,255,255,0.25);
+  height: 100%;
+  padding: 130px 0;
+}
+
+@media print, screen and (max-width:767px){
+
+  .bk-rgba { padding: 40px 0;}
+
+}
+
+.header-sub {
+  color: #fff;
+  font-size: 24px;
+  font-size: 2.4rem;
+  line-height: 1.3;
+  margin: 0 0 1em 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.header-title {
+  color: #fff;
+  font-size: 72px;
+  font-size: 7.2rem;
+  line-height: 1.3;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+@media print, screen and (max-width:767px){
+
+  .header-sub { font-size: 2.0rem;}
+  
+  .header-title { font-size: 4.2rem;}
+
+}
+
+/*
+======================================================
+  content
+--------------------------------------------------- */
+
+/* section
+---------------------------------------------------- */
+section {
+  padding: 60px 25px;
+  text-align: center;
+}
+
+@media print, screen and (max-width:767px){
+
+  section { padding: 30px 25px;}
+
+}
+
+@media print, screen and (min-width:1140px){
+
+  .section-inner {
+    width: 1140px;
+    margin: 80px auto 0;
+    padding: 0 0 0 0;
+  }
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  .section-inner { padding: 0 0 120px 0;}
+
+}
+
+@media print, screen and (max-width:767px){
+
+  .section-inner { padding: 0 0 30px 0;}
+
+}
+
+.section-inner.none { padding: 0;}
+
+section.black {
+  background-color: #3b3f3f; /* ヘリオスブラック */
+  color: #fff;
+}
+
+section.white {
+  background-color: #fff;
+  color: #1b1b1b;
+}
+
+section.green {
+  background-color: #5dc5b9; /* ミントグリーン */
+  color: #1b1b1b;
+}
+
+section.gray {
+  background-color: #f1f1f1;
+  color: #1b1b1b;
+}
+
+
+/* フォントサイズ
+---------------------------------------------------- */
+.f-large {
+  font-size: 32px;
+  font-size: 3.6rem;
+  line-height: 1.5;
+}
+
+.f-medium {
+  font-size: 28px;
+  font-size: 2.6rem;
+  line-height: 1.5;
+}
+
+@media print, screen and (max-width:767px){
+
+  .f-large { font-size: 2.0rem;}
+  
+  .f-medium { font-size: 1.8rem;}
+
+}
+
+/* 体験するとわかること（見出し）
+---------------------------------------------------- */
+
+@media print, screen and (min-width:1140px){
+
+  dl.taiken {
+    width: 840px;
+    margin: 0 auto 60px auto;
+  }
+
+}
+
+@media print, screen and (max-width:1139px){
+
+  dl.taiken { margin-bottom: 30px; padding: 0 15px;}
+
+}
+
+dl.taiken dt {
+  font-size: 32px;
+  font-size: 3.2rem;
+  line-height: 1.4;
+  padding-bottom: .4em;
+}
+
+@media print, screen and (max-width:767px){
+
+  dl.taiken dt { font-size: 2.0rem;}
+
+}
+
+dl.taiken dd {
+  font-size: 46px;
+  font-size: 4.6rem;
+  line-height: 1.4;
+  padding-top: .4em;
+  border-top: .99px solid #1b1b1b;
+  -js-display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  dl.taiken dd {
+    font-size: 42px;
+    font-size: 4.2rem;
+  }
+
+}
+
+@media print, screen and (max-width:767px){
+
+  dl.taiken dd {
+    font-size: 3.0rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+}
+
+span.circle {
+  display: block;
+  background-color: #1b1b1b;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-size: 2.4rem;
+  line-height: 36px;
+  text-align: center;
+  color: #fff;
+  margin-right: 10px;
+}
+
+dl.taiken dd strong {
+  display: block;
+}
+
+@media print, screen and (max-width:767px){
+  
+  span.circle { margin: 2px 10px 0 0;}
+
+  dl.taiken dd strong {
+    flex: 1;
+    text-align: center;
+  }
+  
+  dl.taiken.center dd strong { text-align: center;}
+
+}
+
+/* 体験するとわかること（1）
+---------------------------------------------------- */
+@media print, screen and (min-width:1140px){
+
+  .taiken-01 {
+    -js-display: flex;
+    display: flex;
+    text-align: center;
+  }
+  
+  .taiken-01-img {
+    width: 640px;
+    margin-left: 60px;
+  }
+  
+  .taiken-01-text { flex: 1;}
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  .taiken-01 {
+    text-align: left;
+    padding: 0 30px;
+  }
+
+}
+
+@media print, screen and (max-width:767px){
+
+  .taiken-01 { padding: 0 15px;}
+
+}
+
+.taiken-01-text p {
+  line-height: 2;
+  padding-bottom: 1.8em;
+}
+
+@media print, screen and (max-width:767px){
+
+  .taiken-01-text p {
+    text-align: left;
+    font-size: 1.6rem;
+    line-height: 1.8;
+  }
+
+}
+
+p.more { text-align: right; color: #5dc5b9; /* ミントグリーン */ }
+
+p.more i { margin-left: 4px;}
+
+/* 体験するとわかること（2）
+---------------------------------------------------- */
+@media print, screen and (min-width:768px){
+
+  .taiken-02 {
+    -js-display: flex;
+    display: flex;
+    align-items: center;
+    background-color: #5dc5b9; /* ミントグリーン */
+    margin: 25px 0 20px 0;
+  }
+
+}
+
+@media print, screen and (max-width:767px){
+
+  .taiken-02 { margin: 20px 0 30px 0; padding: 0;}
+
+}
+
+@media print, screen and (min-width:1140px){
+
+  .taiken-02-text { width: 25%;}
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  .taiken-02-text { width: 50%;}
+
+}
+
+@media print, screen and (max-width:767px){
+
+  .taiken-02-text {
+    background-color: #5dc5b9; /* ミントグリーン */
+    padding: 30px 0;
+  }
+
+}
+
+.taiken-02-text h3 {
+  font-size: 28px;
+  font-size: 2.2rem;
+  line-height: 1.4;
+  font-weight: bold;
+  padding: 0 20px 20px 20px;
+}
+
+.taiken-02-text p {
+  line-height: 1.8;
+  font-size: 14px;
+  font-size: 1.4rem;
+  padding: 0 40px;
+}
+
+/* スライド部分
+---------------------------------------------------- */
+ul.yoimono { background-color: #564539;}
+
+@media print, screen and (min-width:1140px){
+
+  ul.yoimono { width: 75%;}
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+  
+  ul.yoimono { width: 50%;}
+  
+}
+
+ul.yoimono li {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  background-color: #564539;
+  -webkit-transition: all .3s linear;
+}
+
+ul.yoimono li:hover {
+  background-color: #5dc5b9; /* ミントグリーン */
+  box-shadow: 2px 6px 8px 4px rgba(0,0,0,0.2) inset;
+}
+
+ul.yoimono li dt figure {
+  position: relative;
+}
+
+ul.yoimono li dt figcaption {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: .5em;
+  font-size: 13px;
+  font-size: 1.3rem;
+}
+
+ul.yoimono li dd { padding: 30px 40px;}
+
+ul.yoimono li dd h4 {
+  text-align: center;
+  font-size: 18px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding-bottom: 1em;
+  color: #fff;
+}
+
+ul.yoimono li dd p {
+  line-height: 1.6;
+  text-align: center;
+  font-size: 13px;
+  font-size: 1.3rem;
+  color: #e5e5e5;
+}
+
+/* 体験するとわかること（3）
+---------------------------------------------------- */
+.taiken-03 {
+  background-color: #f1f1f1;
+  border: 1px solid #e5e5e5;
+  padding: 60px 0;
+  margin: 0 0 60px 0;
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  .taiken-03 {
+    padding: 60px 30px;
+    margin: 0 0 60px 0;
+  }
+
+}
+
+@media print, screen and (max-width:767px){
+
+  .taiken-03 {
+    padding: 15px 15px;
+  }
+
+}
+
+/* 体験の流れ
+---------------------------------------------------- */
+
+@media print, screen and (min-width:1140px){
+
+  ul.flow {
+    -js-display: flex;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0 0 50px 0;
+  }
+  
+  ul.flow li {
+    width: 350px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul.flow li dt { text-align: left;}
+  
+  ul.flow li dt img { width: 175px;}
+  
+  ul.flow li dd {
+    padding: 15px 0px 0px 0px;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  ul.flow {
+    -js-display: flex;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 20px 0;
+  }
+  
+  ul.flow li { width: 30%;}
+  
+  ul.flow li dt { text-align: center;}
+  ul.flow li dt img { width: 175px;}
+  
+  ul.flow li dd { padding: .75em 0; line-height: 1.6; text-align: left;}
+
+}
+
+@media print, screen and (max-width:767px){
+  
+  ul.flow li { padding: 15px;}
+
+  ul.flow li dt { text-align: center;}
+  
+  ul.flow li dl dt img { width: 175px;}
+  
+  ul.flow li dd { padding: .75em 0; line-height: 1.6; text-align: left;}
+
+}
+
+
+/* STEP
+---------------------------------------------------- */
+ul.step-list { padding: 0;}
+ul.step-list li { padding: 0 0 40px 0;}
+ul.step-list li:last-child { padding: 0;}
+
+@media screen and (max-width:767px){
+
+  ul.step-list { padding: 45px 15px 10px 15px;}
+  ul.step-list li { padding: 0 0 20px 0;}
+
+}
+
+ul.step-list li dl dt {
+  color: #5dc5b9; /* ブルーグリーン */
+  letter-spacing: .1em;
+  line-height: 1.6;
+}
+
+ul.step-list li dl dd.step-text {
+  text-align: left;
+}
+
+@media screen and (min-width:1140px){
+
+  ul.step-list li dl {
+    -js-display: flex;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  ul.step-list li dl dt {
+    font-size: 28px;
+    font-size: 2.4rem;
+    width: 120px;
+    padding: 0;
+    text-align: left;
+  }
+  
+  ul.step-list li dl dd.step-text {
+    width: 650px;
+    padding: 0;
+  }
+
+  ul.step-list li dl dd.step-img { width: 400px; padding-top: 10px;}
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  ul.step-list li dl dt {
+    font-size: 28px;
+    font-size: 2.8rem;
+  }
+
+}
+
+@media screen and (max-width:767px){
+
+  ul.step-list li dl dt {
+    font-size: 2.4rem;
+    padding: 20px 0 6px 0;
+  }
+  
+  ul.step-list li dl dd.step-text {
+    padding: 0 0 15px 0;
+  }
+
+}
+
+ul.step-list li dl dd.step-text h3 {
+  font-size: 28px;
+  font-size: 2.8rem;
+  font-weight: normal;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+ul.step-list li dl dd.step-text p {
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 1.8;
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+  
+  ul.step-list li dl dd.step-text { padding: 0 30px;}
+  
+  ul.step-list li dl dd.step-text { padding-bottom: 20px;}
+
+  ul.step-list li dl dd.step-text h3 {
+    font-size: 2.8rem;
+    text-align: center;
+  }
+  
+  ul.step-list li dl dd.step-img { padding: 0 30px;}
+
+}
+
+@media screen and (max-width:767px){
+
+  ul.step-list li dl dd.step-text h3 {
+    font-size: 2.4rem;
+    padding: 0;
+  }
+
+}
+
+ul.step-list li.arrow { text-align: center;}
+
+ul.step-list li.arrow img { width: 157px;}
+
+.fluffy {
+  animation: fluffy1 2s ease infinite;
+}
+
+@keyframes fluffy1 {
+  0% { transform:translateY(0) }
+  25% { transform:translateY(-10px) }
+  50% { transform:translateY(0) }
+  75% { transform:translateY(-10px) }
+  100% { transform:translateY(0) }
+}
+
+
+/* ナビゲーター
+---------------------------------------------------- */
+ul.navigator-list li { padding: 10px 0;}
+
+@media print, screen and (min-width:1140px){
+
+  dl.navigator {
+    -js-display: flex;
+    display: flex;
+    align-items: center;
+  }
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  dl.navigator {
+    padding: 0 30px;
+    -js-display: flex;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+}
+
+@media print, screen and (max-width:767px){
+
+  dl.navigator { padding: 0 15px;}
+
+}
+
+dl.navigator dt {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -js-display: flex;
+  display: flex;
+  align-items: center;
+  padding: 15px 30px;
+  margin-right: 30px;
+}
+
+@media print, screen and (min-width:1140px){
+
+  dl.navigator dt { width: 350px;}
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+  
+  dl.navigator dt { width: 50%;}
+
+}
+
+@media print, screen and (max-width:767px){
+
+  dl.navigator dt { width: 100%;}
+
+}
+
+dl.navigator dt figure { width: 100px; margin-right: 15px;}
+
+dl.navigator dt figure img { border-radius: 50%;}
+
+dl.navigator dt h3 {
+  color: #666;
+  font-size: 13px;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+dl.navigator dt h3 strong {
+  display: block;
+  font-size: 24px;
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #1b1b1b;
+  margin: 0 0 6px 0;
+}
+
+dl.navigator dd.weather-icon { width: 300px;}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+  
+  dl.navigator dd.weather-icon { width: 45%;}
+
+}
+
+@media print, screen and (max-width:767px){
+
+  dl.navigator dd.weather-icon { width: 100%;}
+
+}
+
+dl.navigator dd.navigator-text { text-align: left;}
+
+@media print, screen and (min-width:1140px){
+
+  dl.navigator dd.navigator-text { flex: 1;}
+
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  dl.navigator dd.navigator-text { padding: 15px 0;}
+
+}
+
+ul.navigator-list li dl.navigator dd.weather-icon ul {
+  -js-display: flex;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+@media print, screen and (max-width:767px){
+
+  ul.navigator-list li dl.navigator dd.weather-icon ul {
+    justify-content: center;
+  }
+
+}
+
+ul.navigator-list li dl.navigator dd.weather-icon ul li { width: 67px; margin: 0 10px;}
+
+dl.navigator dd.navigator-text p {
+  line-height: 1.8;
+  font-size: 14px;
+  font-size: 1.4rem;
+}
+
+
+/*
+======================================================
+  footer
+--------------------------------------------------- */
+
+footer.black {
+  background-color: #ffffff; /* ヘリオスブラック #3b3f3f */
+  color: #5dc5b9;
+  padding: 60px 0;
+  text-align: center;
+}
+
+@media print, screen and (min-width:768px) and ( max-width:1139px) {
+
+  footer.black { padding: 30px 30px;}
+
+}
+
+@media print, screen and (max-width:767px){
+
+  footer.black { padding: 30px 15px;}
+
+}
+
+footer.black .f-medium { color: #999;}
+
+footer h3 {
+  font-size: 48px;
+  font-size: 4.8rem;
+  font-weight: bold;
+  line-height: 1.3;
+  padding: .3em 0 .5em 0;
+}
+
+@media print, screen and (max-width:767px){
+
+  footer h3 { font-size: 3.6rem;}
+
+}
+
+.form-area {
+  background-color: #ffffff;
+  padding: 10px 30px 30px 30px;
+  border: 1px solid #3d3d3d;
+  margin: 0 0 60px 0;
+  font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans",ヒラギノ角ゴシック,"Hiragino Kaku Gothic ProN","ヒラギノ角ゴ Pro W3",Roboto,メイリオ,Meiryo,"ＭＳ Ｐゴシック",sans-serif;
+}
+
+address {
+  font-size: 12px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* ページトップへ戻るボタン
+---------------------------------------------------- */
+#page-top {
+  position: fixed;
+}
+
+#page-top a {
+  background: rgba(0,0,0,.5);
+  text-decoration: none;
+  color: #fff;
+  text-align: center;
+  display: block;
+}
+
+@media screen and (min-width:768px){
+
+  #page-top {
+    bottom: 40px;
+    right: 40px;
+    font-size: 28px;
+  }
+  
+  #page-top a {
+    width: 60px;
+    height: 60px;
+    padding: 12px 0 0 0;
+    border-radius: 30px; /* CSS3草案 */
+    -webkit-border-radius: 30px; /* Safari,Google Chrome用 */
+    -moz-border-radius: 30px; /* Firefox用 */
+  }
+  
+  #page-top a:hover {
+    text-decoration: none;
+    background: rgba(0,0,0,.3);
+  }
+
+}
+
+@media screen and (max-width:767px){
+
+  #page-top {
+    bottom: 15px;
+    right: 15px;
+    font-size: 28px;
+  }
+
+  #page-top a {
+    background: rgba(0,0,0,.5);
+    text-decoration: none;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    padding: 12px 0 0 0;
+    border-radius: 30px;
+  }
+
+}
+
+/* フォーム
+---------------------------------------------------- */
+#hs_form_target_form_module_name,
+.hs-form.stacked.hs-custom-form.hs-form-private {
+  width: 500px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 0 0 20px 0;
+}
+
+@media screen and (max-width:767px){
+
+  #hs_form_target_form_module_name,
+  .hs-form.stacked.hs-custom-form.hs-form-private {
+    width: 100%;
+  }
+
+}
+
+.hs_submit { text-align: center;}
+
+.hs-form.stacked.hs-custom-form.hs-form-private fieldset {
+  width: 100%;
+  padding: 0 0 20px 0;
+}
+
+.hs-form-field { width: 100%;}
+
+ul.inputs-list li .hs-form-checkbox-display,
+ul.inputs-list li .hs-form-booleancheckbox-display {
+  padding: 10px 0;
+  line-height: 1.6;
+}
+
+.hs-form-required { color: red;}
+
+.hs-field-desc {
+  color: #fff;
+  font-size: 18px;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.input.hs-input {
+  font-size: 18px;
+  font-size: 1.8rem;
+  line-height: 30px;
+  width: 100%;
+  display: block;
+}
+
+.hs_sector_name .input select,
+.hs_sector_name .input select option,
+.hs_progression .input select,
+.hs_progression .input select option {
+  outline: none;
+  vertical-align: middle;
+  height: 36px;
+  line-height: 36px;
+  background-color: #fff;
+  border: 1px solid #c6c6c6;
+  font-size: 18px;
+}
+
+.input textarea {
+  height: 100px;
+  width: 100%;
+}
+
+.hs_submit .actions input.hs-button.large.primary {
+  font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans",ヒラギノ角ゴシック,"Hiragino Kaku Gothic ProN","ヒラギノ角ゴ Pro W3",Roboto,メイリオ,Meiryo,"ＭＳ Ｐゴシック",sans-serif;
+  font-size: 24px;
+  font-size: 2.4rem;
+  padding: 1em 2em;
+  background-color: #6cc744;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, .25);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, .25);
+  -webkit-transition: all .3s linear;
+  color: #fff;
+}
+
+.hs_submit .actions input.hs-button.large.primary:hover {
+  background-color: #4bb937;
+}
+
+@media screen and (max-width:767px){
+
+  .hs_submit .actions input.hs-button.large.primary {
+    font-size: 1.8rem;
+    max-width: 100%;
+  }
+
+}
+
+
+
+.gray {
+  line-height: 1.6;
+  font-size: 11px;
+  font-size: 1.8rem;
+  color: #9da0a4;
+  font-weight: 400;
+}
+
+
+/* HASHI追加(2019.2.6)
+---------------------------------------------------- */
+
+h2 {
+  font-size:35px;
+  font-size: 2.8rem;
+  line-height: 1.8;
+  font-weight: bold;
+  padding: 0 40px 20px 40px;
+  padding: 0.5em;/*文字周りの余白*/
+  color: #ffffff;/*文字色*/
+  background: #564539; /* ミントグリーン 背景色*/
+  border-bottom: solid 20px #ffffff;/*下線*/
+  padding: 0.5em;/*文字まわり（上下左右）の余白*/
+}
+
+
+/* HASHI追加(2019.2.14)
+---------------------------------------------------- */
+.lp-mid {
+  text-align: center;
+  background-image: url(http://transitmarketing.jp/wp-content/uploads/2019/04/AdobeStock_106043666_m-1.jpeg);
+  background-repeat: no-repeat;
+  background-position:center center;
+  background-size: cover;
+  animation: fadeIn 5s ease 0s 1 normal;
+  -webkit-animation: fadeIn 5s ease 0s 1 normal;
+}
+
+
+.bk-rgba_mid {
+  background: rgba(0,0,0,0.1);
+  height: 100%;
+  padding: 45px 0;
+}
+
+@media print, screen and (max-width:767px){
+
+  .bk-rgba_mid { padding: 40px 0;}
+
+}
+
+.mid-sub {
+  color: #fff;
+  font-size: 24px;
+  font-size: 2.4rem;
+  line-height: 1.3;
+  margin: 0 0 1em 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.mid-title {
+  color: #fff;
+  font-size: 72px;
+  font-size: 7.2rem;
+  line-height: 1.3;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+@media print, screen and (max-width:767px){
+
+  .mid-sub { font-size: 2.0rem;}
+  
+  .mid-title { font-size: 4.2rem;}
+
+}
+
+.fukidashi-up {
+  position: relative;
+  display: inline-block;
+  margin: 15px 0 60px 0;
+  padding: 10px 30px;
+  min-width: 120px;
+  max-width: 100%;
+  color: #fff;
+  font-size: 16px;
+  background-color: #5dc5b9; /* ブルーグリーン */
+}
+
+.fukidashi-up:before{
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  margin-left: -15px;
+  border: 15px solid transparent;
+  border-bottom: 15px solid #5dc5b9; /* ブルーグリーン */
+}
+
+.fukidashi-up h4 {
+  font-size: 44px;
+  font-size: 3.0rem;
+  line-height: 1.6;
+  letter-spacing: .1em;
+  margin: 0 0 10px 0;
+}
+
+.fukidashi-up h4 span { border-bottom: 1px solid #fff; padding: 0 0 4px 0;}
+
+.fukidashi-up p {
+  font-size: 18px;
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.hbspt-form {
+  padding-top: 2em !important;
+}
+form fieldset {
+  padding: 0 0 20px 0 !important;
+}
+
+
+/* HASHI追加(2019.4.30)
+---------------------------------------------------- */
+
+.youtube2 {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+.youtube2 iframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* HASHI追加_ボタン(2019.5.3)
+---------------------------------------------------- */
+.btn-default {
+  background-color: transparent;
+  border: 1px solid #5dc5b9;
+  border-radius: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: normal;
+  letter-spacing: .2em;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding: 18px 45px 16px 45px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s linear 0s;
+  line-height: 1.3;
+}
+
+.btn-default span.small { font-size: 15px;}
+
+@media screen and (max-width:767px){
+  
+  .btn-default {
+    font-size: 1.6rem;
+    padding: 18px 20px 16px 10px;
+    margin-bottom: 10px;
+  }
+  
+}
+
+.btn-default.btn-white {
+  border: 1px solid #ffffff;
+  margin-bottom: 60px;
+  margin-top: 30px;
+  color: #ffffff; /* ブルーグリーン */
+}
+
+.key-visual-text .btn-default.btn-white {
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.btn-default:hover,
+.btn-default.btn-white:hover {
+  background-color: #30b9c1; /* 明るい水色 */
+  background-color: #5dc5b9; /* ブルーグリーン */
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+  padding: 18px 16px;
+  font-size: 20px;
+  line-height: 1.3;
+  width: 100%;
+  margin-top: 10px;
+  color: #333;
+}
+
+@media screen and (max-width:767px){
+
+  .btn-lg, .btn-group-lg > .btn {
+    font-size: 16px;
+    letter-spacing: .1em;
+  }
+
+}
+
+.cta1 {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center top;
+  text-align: center;
+  padding: 0px 0px 0px 0px;
+  color: #fff;
+  line-height: 1.5;
+}
+
+@media screen and (max-width:767px){
+
+  .cta1 {
+    background-size: cover;
+    padding: 10px 15px 15px 15px;
+  }
+
+}
+
+
+.btn-default.btn-black {
+  border: 1px solid #000000;
+  margin-bottom: 0px;
+  margin-top: 20px;
+  color: #000000; /* ブラック */
+}
+
+img.logo {
+  width: 20%;
+  padding-right: 30px;
+  padding-top: 10px;
+}
+
+img.progress {
+  width: 56%;
+  padding-right: 30px;
+  padding-top: 10px;
+}
+
+img.progress2 {
+  width: 40%;
+  padding-right: 30px;
+  padding-top: 10px;
+}
+
+
+@media screen and (max-width:767px){
+  
+  #MainImgArea .key-visual-text p {
+    font-size: 1.8rem;
+    margin: 20px 0;
+  }
+
+  img.logo {
+    display: block;
+    padding: 0;
+    margin: 0 auto 10px auto;
+    width: 25%;
+  }
+
+    img.progress {
+    display: block;
+    padding: 0;
+    margin: 0 auto 10px auto;
+    width: 100%;
+  }
+
+    img.progress2 {
+    display: block;
+    padding: 0;
+    margin: 0 auto 10px auto;
+    width: 100%;
+  }
+
+
+}
+
+
+/* HASHI追加_mission-list(2019.5.28)
+---------------------------------------------------- */
+
+@media screen and (min-width:768px){
+
+  dl.mission-list {
+    -js-display: flex;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    margin-top: 40px;
+  }
+
+  dl.mission-list dt {
+    width: 260px;
+    padding: 10px 0 0 0;
+  }
+  
+  dl.mission-list dd {
+    width: 830px;
+    text-align: left;
+    padding: 0 0 0 4.5em;
+  }
+
+}
+
+@media screen and (max-width:767px){
+
+  dl.mission-list dt {
+    display: block;
+    padding: 0 25px;
+    margin-bottom: 15px;
+  }
+  
+  dl.mission-list dt img { width: 180px;}
+
+}
+
+dl.mission-list dd h3 {
+  font-size: 25px;
+  letter-spacing: .2em;
+  font-weight: bold;
+  margin: 0 0 15px 0;
+  padding: 5px;
+}
+
+@media screen and (max-width:767px){
+
+  dl.mission-list dd h3 {
+    font-size: 2.0rem;
+    margin: 0 0 5px 0;
+  }
+
+}
+
+@media screen and (min-width:768px){
+
+  dl.mission-det {
+    -js-display: flex;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  dl.mission-det dt {
+    color: #5dc5b9; /* ブルーグリーン */
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: .2em;
+    width: 140px;
+    margin: 0;
+    padding: 5px;
+  }
+  
+  dl.mission-det dd {
+    width: 670px;
+    border-left: 1px solid #5dc5b9;
+    margin: 0;
+    padding: 5px;
+    min-height: 180px;
+  }
+  
+  dl.mission-det dd p { padding-left: 30px;}
+
+}
+
+@media screen and (max-width:767px){
+
+  dl.mission-det dt {
+    color: #5dc5b9;
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 16px;
+    letter-spacing: .1em;
+  }
+  
+  dl.mission-det dd { margin-bottom: 20px;}
+  
+  dl.mission-det dd p { text-align: left;}
+
+}
+
+
+@media screen and (max-width:767px){
+
+  ul.mission-list li dl dd .mission-img { margin: 0 0 15px 0;}
+  
+}
+
+ul.mission-list li dl dt.mission-number {
+  color: #f50000; /* 明るい赤 */
+  font-size: 56px;
+  font-size: 5.6rem;
+  font-weight: bold;
+  letter-spacing: .1em;
+  margin: 0 0 20px 0;
+}
+
+ul.mission-list li dl dd.mission-text h3 {
+  color: #fff;
+  font-size: 32px;
+  font-size: 3.2rem;
+  font-weight: bold;
+  letter-spacing: .1em;
+  margin: 0 0 20px 0;
+}
+
+ul.mission-list li dl dd.mission-text p {
+  color: #fff;
+  font-size: 18px;
+  font-size: 1.8rem;
+  padding: 0 0 2em 0;
+}
+
+@media screen and (max-width:767px){
+
+  ul.mission-list li dl dd.mission-text h3 {
+    font-size: 2.2rem;
+    margin: 0 0 15px 0;
+  }
+  
+  ul.mission-list li dl dd.mission-text p {
+    font-size: 1.6rem;
+  }
+  
+  ul.mission-list li dl dd.mission-text p.dotline { padding: 0 0 10px 0;}
+
+}
+
+/*
+======================================================
+  Launchpad header 190528追加
+--------------------------------------------------- */
+.lp-headerlp {
+  text-align: center;
+  background-image: url(http://transitmarketing.jp/wp-content/uploads/2019/05/AdobeStock_149820851_Preview.jpeg);
+  background-repeat: no-repeat;
+  background-position:center center;
+  background-size: cover;
+  animation: fadeIn 10s ease 0s 1 normal;
+  -webkit-animation: fadeIn 5s ease 0s 1 normal;
+}
+
+@keyframes fadeIn {
+  0% { display: none; opacity: 0;}
+  1% { display: block; opacity: 0;}
+  100% { display: block; opacity: 1;}
+}
+
+@-webkit-keyframes fadeIn {
+  0% { display: none; opacity: 0;}
+  1% { display: block; opacity: 0;}
+  100% { display: block; opacity: 1;}
+}
+
+.bk-rgba {
+  background: rgba(255,255,255,0.25);
+  height: 100%;
+  padding: 130px 0;
+}
+
+@media print, screen and (max-width:767px){
+
+  .bk-rgba { padding: 40px 0;}
+
+}
+
+.headerlp-sub {
+  color: #fff;
+  font-size: 24px;
+  font-size: 2.4rem;
+  line-height: 1.3;
+  margin: 0 0 1em 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.headerlp-title {
+  color: #fff;
+  font-size: 72px;
+  font-size: 7.2rem;
+  line-height: 1.3;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+@media print, screen and (max-width:767px){
+
+  .headerlp-sub { font-size: 2.0rem;}
+  
+  .headerlp-title { font-size: 4.2rem;}
+
+}
+
+
