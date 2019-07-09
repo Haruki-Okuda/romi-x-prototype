@@ -25,4 +25,16 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '2.0.1'
   gem 'spring-watcher-listen', '2.0.1'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-byebug'
+
+
+  gem 'devise' #ログイン機能実装
+  gem 'paperclip' #画像アップロード
+  gem 'kaminari' #ページネーション実装
+  gem 'bootstrap-sass' #Bootstrap導入
+  gem 'therubyracer' #以下はレイアウトをいじるためのgem。
+  gem 'twitter-bootstrap-rails'
+  gem 'bootstrap-material-design'
 end

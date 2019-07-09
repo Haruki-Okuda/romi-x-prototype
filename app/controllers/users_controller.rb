@@ -1,3 +1,4 @@
+
 class UsersController < ApplicationController
   before_action :authenticate_user, {only: [:index, :show, :edit, :update]}
   before_action :forbid_login_user, {only: [:new, :create, :login_form, :login]}
@@ -14,7 +15,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
+
   def create
     @user = User.new(
       name: params[:name],
@@ -25,12 +26,13 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "ユーザー登録が完了しました"
-      redirect_to("/users/#{@user.id}")
+      redirect_to @user
     else
       render("users/new")
     end
   end
-  
+
+
   def edit
     @user = User.find_by(id: params[:id])
   end
@@ -48,7 +50,7 @@ class UsersController < ApplicationController
     
     if @user.save
       flash[:notice] = "ユーザー情報を編集しました"
-      redirect_to("/users/#{@user.id}")
+      redirect_to @user
     else
       render("users/edit")
     end
@@ -57,10 +59,10 @@ class UsersController < ApplicationController
   def login_form
   end
   
+  
+
   def login
-    
     @user = User.find_by(email: params[:email])
-    
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       flash[:notice] = "ログインしました"

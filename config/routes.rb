@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  
   post "likes/:post_id/create" => "likes#create"
   post "likes/:post_id/destroy" => "likes#destroy"
+  resources :users
 
+  
   post "users/:id/update" => "users#update"
   get "users/:id/edit" => "users#edit"
   post "users/create" => "users#create"
